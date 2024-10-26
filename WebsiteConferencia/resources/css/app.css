@@ -1,0 +1,22 @@
+header {
+    background-color: darkblue;
+    color: white;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    position: top;
+}
+body {
+    margin: 0;
+    padding: 0;
+    font: Arial, Helvetica, sans-serif;
+    font-size: 2rem;
+}
+
+footer {
+    background-color: #3333;
+    text-align: center;
+}
+aside {
+    text-align: right;
+}

@@ -7,3 +7,7 @@ Route::get('/rdo', function () {
 });
 
 Route::post('/rdo/gerar', [RdoController::class, 'gerarRdo']); // Processa o formulário
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
