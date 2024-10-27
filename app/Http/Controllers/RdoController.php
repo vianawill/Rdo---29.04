@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 
 class RdoController extends Controller
 {
+    public function rdo() {
+        return view('rdo');
+    }
+    
     public function gerarRdo(Request $request)
     {
         // Validação dos campos
