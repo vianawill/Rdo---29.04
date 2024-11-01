@@ -12,10 +12,20 @@
                         @csrf
 
                         <div class="row mb-3">
-                            <label for="cpf" class="col-md-4 col-form-label text-md-end">{{ __('CPF') }}</label> {{-- Alterei o campo de email para cpf --}}
+                            <label for="cpf" 
+                                class="col-md-4 col-form-label text-md-end">
+                                {{ __('CPF') }}
+                            </label> {{-- Alterei o campo de email para cpf --}}
 
                             <div class="col-md-6">
-                                <input id="cpf" type="text" class="form-control @error('cpf') is-invalid @enderror" name="cpf" value="{{ old('cpf') }}" required autocomplete="cpf" autofocus> {{-- Alterei o campo de email para cpf --}}
+                                <input id="cpf" 
+                                    type="text" 
+                                    class="form-control @error('cpf') is-invalid @enderror" 
+                                    name="cpf" 
+                                    value="{{ old('cpf') }}" 
+                                    required 
+                                    autocomplete="cpf" 
+                                    autofocus> {{-- Alterei o campo de email para cpf --}}
 
                                 @error('cpf')
                                     <span class="invalid-feedback" role="alert">
@@ -26,10 +36,18 @@
                         </div>
 
                         <div class="row mb-3">
-                            <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Senha') }}</label>
+                            <label for="password" 
+                                class="col-md-4 col-form-label text-md-end">
+                                {{ __('Senha') }}
+                            </label>
 
                             <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+                                <input id="password" 
+                                    type="password" 
+                                    class="form-control @error('password') is-invalid @enderror" 
+                                    name="password" 
+                                    required 
+                                    autocomplete="current-password">
 
                                 @error('password')
                                     <span class="invalid-feedback" role="alert">
@@ -42,7 +60,11 @@
                         <div class="row mb-3">
                             <div class="col-md-6 offset-md-4">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
+                                    <input class="form-check-input" 
+                                        type="checkbox" 
+                                        name="remember" 
+                                        id="remember" 
+                                        {{ old('remember') ? 'checked' : '' }}>
 
                                     <label class="form-check-label" for="remember">
                                         {{ __('Lembrar login') }}
