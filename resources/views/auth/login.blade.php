@@ -11,21 +11,22 @@
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
 
-                        <div class="row mb-3">
+                        <div class="row mb-3"> <!-- Alterei o campo de email para cpf -->
                             <label for="cpf" 
                                 class="col-md-4 col-form-label text-md-end">
                                 {{ __('CPF') }}
-                            </label> {{-- Alterei o campo de email para cpf --}}
-
-                            <div class="col-md-6">
+                            </label>
+                            
+                            <div class="col-md-6"> <!-- Alterei o campo de email para cpf -->
                                 <input id="cpf" 
                                     type="text" 
                                     class="form-control @error('cpf') is-invalid @enderror" 
                                     name="cpf" 
+                                    maxlength = "11"
                                     value="{{ old('cpf') }}" 
                                     required 
                                     autocomplete="cpf" 
-                                    autofocus> {{-- Alterei o campo de email para cpf --}}
+                                    autofocus> 
 
                                 @error('cpf')
                                     <span class="invalid-feedback" role="alert">

@@ -1,9 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1>Usuários</h1>
-    <a href="{{ route('users.create') }}" class="btn btn-primary">Criar Novo Usuário</a>
-
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Usuários</h1>
+        <a href="{{ route('users.create') }}" class="btn btn-primary">Criar Novo Usuário</a>
+    </div>
     @if (session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>
     @endif
@@ -18,6 +20,7 @@
                 <th>Nome</th>
                 <th>CPF</th>
                 <th>Email</th>
+                <th>Nível de acesso</th>
             </tr>
         </thead>
         <tbody>
@@ -26,14 +29,18 @@
                     <td>{{ $user->name }}</td>
                     <td>{{ $user->cpf }}</td>
                     <td>{{ $user->email }}</td>
-                    <td>
-                        <a href="{{ route('users.edit', $user) }}" class="btn btn-warning">Editar</a>
-                        <form action="{{ route('users.destroy', $user) }}" method="POST" style="display:inline;">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger">Excluir</button>
-                        </form>
-                    </td>
+                    <td>{{ $user->access_level }}</td>
+                    
+                    @can('del-user')
+                        <td>
+                            <a href="{{ route('users.edit', $user) }}" class="btn btn-warning">Editar</a>
+                            <form action="{{ route('users.destroy', $user) }}" method="POST" style="display:inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger">Excluir</button>
+                            </form>
+                        </td>
+                    @endcan
                 </tr>
             @endforeach
         </tbody>

@@ -1,22 +1,32 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1>Criar Usuário</h1>
+<div class="container">
+    <h1 class="mb-4">Criar Usuário</h1>
 
     <form action="{{ route('users.store') }}" method="POST">
         @csrf
-        <label for="name">Nome</label>
-        <input type="text" name="name" required>
+        <div class="mb-3 row">
+            <label for="name" class="form-label">Nome</label>
+            <input type="text" name="name" class="form-control" required>
+        </div>
 
-        <label for="email">Email</label>
-        <input type="email" name="email" required>
+        <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" name="email" class="form-control" required>
+        </div>
 
-        <label for="password">Senha</label>
-        <input type="password" name="password" required>
+        <div class="mb-3">
+            <label for="password" class="form-label">Senha</label>
+            <input type="password" name="password" class="form-control" required>
+        </div>
 
-        <label for="cpf">CPF</label>
-        <input type="text" name="cpf" required>
+        <div class="mb-3">
+            <label for="cpf" class="form-label">CPF</label>
+            <input type="text" name="cpf" class="form-control" required>
+        </div>
 
-        <button type="submit">Criar</button>
+        <button type="submit" class="btn btn-primary">Criar</button>
     </form>
+</div>
 @endsection

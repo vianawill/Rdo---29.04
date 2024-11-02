@@ -10,7 +10,7 @@ Route::get('/', function () {
     return view('auth.login'); // Exibe o formulário
 });
 
-Route::resource('users', UserController::class);
+Route::resource('users', UserController::class)->middleware('auth');
 
 Route::post('/rdo/gerar', [RdoController::class, 'gerarRdo']); // Processa o formulário
 
