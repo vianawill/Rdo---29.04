@@ -10,12 +10,14 @@ Route::get('/', function () {
     return view('auth.login'); // Exibe o formulário
 });
 
-Route::resource('users', UserController::class)->middleware('auth');
+Route::middleware(['auth'])->group(function() {
+    Auth::routes(); //protege todas as rotas
 
-Route::post('/rdo/gerar', [RdoController::class, 'gerarRdo']); // Processa o formulário
+    Route::resource('users', UserController::class);
 
-Route::get('/rdo', [RdoController::class, 'rdo'])->name('rdo');
+    Route::post('/rdo/gerar', [RdoController::class, 'gerarRdo']); // Processa o formulário
 
-Auth::routes();
+    Route::get('/rdo', [RdoController::class, 'rdo'])->name('rdo');
 
-Route::get('/home', [HomeController::class, 'index'])->name('home');
+    Route::get('/home', [HomeController::class, 'index'])->name('home');
+});
