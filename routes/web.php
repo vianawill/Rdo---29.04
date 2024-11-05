@@ -10,8 +10,12 @@ Route::get('/', function () {
     return view('auth.login'); // Exibe o formulário
 });
 
+Auth::routes(); //protege todas as rotas
+
+Route::get('/home', [HomeController::class, 'index'])->name('home');
+
 Route::middleware(['auth'])->group(function() {
-    Auth::routes(); //protege todas as rotas
+    
 
     Route::resource('users', UserController::class);
 
@@ -19,5 +23,5 @@ Route::middleware(['auth'])->group(function() {
 
     Route::get('/rdo', [RdoController::class, 'rdo'])->name('rdo');
 
-    Route::get('/home', [HomeController::class, 'index'])->name('home');
+    
 });
