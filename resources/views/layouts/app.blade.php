@@ -29,18 +29,41 @@
                     <h1>{{ config('app.name', 'RDO') }}</h1>
                 </a>
 
+                <!-- só aparece se logado -->
                 @auth
-                    <a href="{{ route('users.index') }}" class="btn btn-primary">Listar usuários</a>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                            <span class="navbar-toggler-icon"></span>
+                   <!-- <div class="container text-center"> -->
+                        <div class="button-container">
+                            <a href="{{ route('users.index') }}" 
+                                class="btn btn-primary">Usuários
+                            </a>
+                            <a href="{{ route('rdos.index') }}" 
+                                class="btn btn-primary">RDOs
+                            </a>
+                            <a href="{{ route('obras.index') }}" 
+                                class="btn btn-primary">Obras
+                            </a>
+                            <a href="{{ route('equipamentos.index') }}" 
+                                class="btn btn-primary">Equipamentos
+                            </a>
+                            <a href="{{ route('mao_obras.index') }}" 
+                                class="btn btn-primary">Mão de obra
+                            </a>
+                        </div>
+                    <!-- </div> -->
+
+                    <button class="navbar-toggler" 
+                        type="button" data-bs-toggle="collapse" 
+                        data-bs-target="#navbarSupportedContent" 
+                        aria-controls="navbarSupportedContent" 
+                        aria-expanded="false" 
+                        aria-label="{{ __('Toggle navigation') }}">
+                        <span class="navbar-toggler-icon"></span>
                     </button>
                 @endauth
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav me-auto">
-
-                    </ul>
+                    <ul class="navbar-nav me-auto"></ul>
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use App\Models\MaoObra;
 use Illuminate\Http\Request;
 
-class UserController extends Controller
+class MaoObraController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +14,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::all();
-        return view('users.index', compact('users'));
+        $mao_obras = MaoObra::all();
+        return view('mao_obras.index', compact('mao_obras'));
     }
 
     /**
@@ -25,7 +25,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('users.create');
+        return view('mao_obras.create');
     }
 
     /**
@@ -36,54 +36,51 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        User::create($request->all());
-        return redirect()->route('users.index');        
+        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\MaoObra  $maoObra
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show(MaoObra $maoObra)
     {
-        return view('users.show', compact('user'));
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\MaoObra  $maoObra
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $user)
+    public function edit(MaoObra $maoObra)
     {
-        return view('users.edit', compact('user'));
+        //
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Models\MaoObra  $maoObra
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, MaoObra $maoObra)
     {
-        $user->update($request->all());
-        return redirect()->route('users.index');
+        //
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\MaoObra  $maoObra
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy(MaoObra $maoObra)
     {
-        $user -> delete();
-        return redirect()->route('users.index')->with('success', 'Usuário excluído com sucesso.');
+        //
     }
 }

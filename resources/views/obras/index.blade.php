@@ -3,8 +3,8 @@
 @section('content')
     <div class="container">
         <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1>Usuários</h1>
-        <a href="{{ route('users.create') }}" class="btn btn-primary">Cadastrar Usuário</a>
+        <h1>Obras</h1>
+        <a href="{{ route('obras.create') }}" class="btn btn-primary">Cadastrar Obra</a>
     </div>
     @if (session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>
@@ -24,17 +24,17 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($users as $user)
+            @foreach ($obras as $obra)
                 <tr>
-                    <td>{{ $user->name }}</td>
-                    <td>{{ $user->cpf }}</td>
-                    <td>{{ $user->email }}</td>
-                    <td>{{ $user->access_level }}</td>
+                    <td>{{ $obra->name }}</td>
+                    <td>{{ $obra->cpf }}</td>
+                    <td>{{ $obra->email }}</td>
+                    <td>{{ $obra->access_level }}</td>
                     
-                    @can('del-user')
+                    @can('del-obra')
                         <td>
-                            <a href="{{ route('users.edit', $user) }}" class="btn btn-warning">Editar</a>
-                            <form action="{{ route('users.destroy', $user) }}" method="POST" style="display:inline;">
+                            <a href="{{ route('obras.edit', $obra) }}" class="btn btn-warning">Editar</a>
+                            <form action="{{ route('obras.destroy', $obra) }}" method="POST" style="display:inline;">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger">Excluir</button>

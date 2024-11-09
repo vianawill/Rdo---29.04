@@ -3,8 +3,8 @@
 @section('content')
     <div class="container">
         <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1>Usuários</h1>
-        <a href="{{ route('users.create') }}" class="btn btn-primary">Cadastrar Usuário</a>
+        <h1>RDOs</h1>
+        <a href="{{ route('rdos.create') }}" class="btn btn-primary">Cadastrar RDO</a>
     </div>
     @if (session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>
@@ -24,17 +24,17 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($users as $user)
+            @foreach ($rdos as $rdo)
                 <tr>
-                    <td>{{ $user->name }}</td>
-                    <td>{{ $user->cpf }}</td>
-                    <td>{{ $user->email }}</td>
-                    <td>{{ $user->access_level }}</td>
+                    <td>{{ $rdo->name }}</td>
+                    <td>{{ $rdo->cpf }}</td>
+                    <td>{{ $rdo->email }}</td>
+                    <td>{{ $rdo->access_level }}</td>
                     
-                    @can('del-user')
+                    @can('del-rdo')
                         <td>
-                            <a href="{{ route('users.edit', $user) }}" class="btn btn-warning">Editar</a>
-                            <form action="{{ route('users.destroy', $user) }}" method="POST" style="display:inline;">
+                            <a href="{{ route('rdos.edit', $rdo) }}" class="btn btn-warning">Editar</a>
+                            <form action="{{ route('rdos.destroy', $rdo) }}" method="POST" style="display:inline;">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger">Excluir</button>

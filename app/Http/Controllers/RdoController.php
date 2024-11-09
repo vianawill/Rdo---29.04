@@ -2,27 +2,111 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Rdo;
+use App\Models\Obra;
+use App\Models\Equipamento;
+use App\Models\MaoObra;
 use Illuminate\Http\Request;
 
 class RdoController extends Controller
 {
-    public function rdo() {
-        return view('rdo');
-    }
-    
-    public function gerarRdo(Request $request)
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
     {
-        // Validação dos campos
-        $validatedData = $request->validate([
-            'numero' => 'required|string',
-            'data' => 'required|date',
-            'obra' => 'required|string',
-        ]);
+        $rdos = Rdo::all();
+        return view('rdos.index', compact('rdos'));
+    }
 
-        // Exemplo: Você pode salvar os dados no banco de dados ou realizar outras ações
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        $obras = Obra::all();  // Recupera todas as obras
+        $equipamentos = Equipamento::all();  // Recupera todos os equipamentos
+        $mao_obras = MaoObra::all();  // Recupera toda a mão de obra
 
-        // Retorna uma mensagem de sucesso
-        return back()->with('success', 'RDO Gerado com sucesso!');
+        return view('rdos.create', compact('obras', 'equipamentos', 'mao_obras'));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        // Criação do RDO
+        $rdo = new Rdo();
+        $rdo->numero_rdo = $request->numero_rdo;
+        $rdo->data = $request->data;
+        $rdo->obra_id = $request->obra_id;
+        $rdo->dia_da_semana = $request->dia_da_semana;
+        $rdo->manha = $request->manha;
+        $rdo->tarde = $request->tarde;
+        $rdo->noite = $request->noite;
+        $rdo->condicao_area = $request->condicao_area;
+        $rdo->acidente = $request->acidente;
+        $rdo->save();
+
+        // Relacionar equipamentos ao RDO
+        $rdo->equipamentos()->sync($request->equipamentos);
+
+        // Relacionar mão de obra ao RDO
+        $rdo->maoObras()->sync($request->mao_obras);
+
+        return redirect()->route('rdos.index');
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Rdo  $rdo
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Rdo $rdo)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\Rdo  $rdo
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Rdo $rdo)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Rdo  $rdo
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, Rdo $rdo)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\Rdo  $rdo
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Rdo $rdo)
+    {
+        //
     }
 }
-
