@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 02/11/2024 às 03:38
+-- Tempo de geração: 09/11/2024 às 20:44
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -24,6 +24,22 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Estrutura para tabela `equipamentos`
+--
+
+CREATE TABLE `equipamentos` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `nome` varchar(255) NOT NULL,
+  `tipo` varchar(255) NOT NULL,
+  `quantidade` decimal(10,2) NOT NULL,
+  `obra_id` bigint(20) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura para tabela `failed_jobs`
 --
 
@@ -35,6 +51,22 @@ CREATE TABLE `failed_jobs` (
   `payload` longtext NOT NULL,
   `exception` longtext NOT NULL,
   `failed_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `mao_obras`
+--
+
+CREATE TABLE `mao_obras` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `funcao` varchar(255) NOT NULL,
+  `quantidade` int(11) NOT NULL,
+  `horas_trabalhadas` decimal(10,2) NOT NULL,
+  `obra_id` bigint(20) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -61,7 +93,33 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (5, '2024_10_26_184150_create_permissions_table', 2),
 (6, '2024_10_26_185912_create_permission_user_table', 2),
 (7, '2024_10_30_125402_add_cpf_to_users_table', 3),
-(8, '2024_11_02_002647_add_access_level_to_users_table', 4);
+(8, '2024_11_02_002647_add_access_level_to_users_table', 4),
+(9, '2024_11_09_002451_create_obras_table', 5),
+(10, '2024_11_09_003735_create_equipamentos_table', 5),
+(11, '2024_11_09_003919_create_mao_obras_table', 5),
+(12, '2024_11_09_021005_create_rdo_equipamentos_table', 5),
+(13, '2024_11_09_021116_create_rdo_mao_obras_table', 5),
+(14, '2024_11_09_025259_remove_equipamentos_utilizados_and_mao_de_obra_utilizada_from_rdos_table', 6);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `obras`
+--
+
+CREATE TABLE `obras` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `nome` varchar(255) NOT NULL,
+  `empresa_contratada` varchar(255) NOT NULL,
+  `objeto_contrato` varchar(255) NOT NULL,
+  `tempo_total_contrato` varchar(255) NOT NULL,
+  `data_prevista_inicio_obra` date NOT NULL,
+  `data_real_inicio_obra` date DEFAULT NULL,
+  `data_prevista_termino_obra` date NOT NULL,
+  `data_real_termino_obra` date DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -123,6 +181,55 @@ CREATE TABLE `personal_access_tokens` (
 -- --------------------------------------------------------
 
 --
+-- Estrutura para tabela `rdos`
+--
+
+CREATE TABLE `rdos` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `numero_rdo` varchar(255) NOT NULL,
+  `data` date NOT NULL DEFAULT current_timestamp(),
+  `dia_da_semana` varchar(255) NOT NULL,
+  `obra_id` bigint(20) UNSIGNED NOT NULL,
+  `manha` enum('Bom','Chuva leve','Chuva forte') NOT NULL,
+  `tarde` enum('Bom','Chuva leve','Chuva forte') NOT NULL,
+  `noite` enum('Bom','Chuva leve','Chuva forte') NOT NULL,
+  `condicao_area` enum('Operável','Operável parcialmente','Inoperável') NOT NULL,
+  `acidente` enum('Nao houve','Sem afastamento','Com afastamento') NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `rdo_equipamentos`
+--
+
+CREATE TABLE `rdo_equipamentos` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `rdo_id` bigint(20) UNSIGNED NOT NULL,
+  `equipamento_id` bigint(20) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `rdo_mao_obras`
+--
+
+CREATE TABLE `rdo_mao_obras` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `rdo_id` bigint(20) UNSIGNED NOT NULL,
+  `mao_obra_id` bigint(20) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura para tabela `users`
 --
 
@@ -155,6 +262,13 @@ INSERT INTO `users` (`id`, `cpf`, `name`, `email`, `access_level`, `email_verifi
 --
 
 --
+-- Índices de tabela `equipamentos`
+--
+ALTER TABLE `equipamentos`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `equipamentos_obra_id_foreign` (`obra_id`);
+
+--
 -- Índices de tabela `failed_jobs`
 --
 ALTER TABLE `failed_jobs`
@@ -162,9 +276,22 @@ ALTER TABLE `failed_jobs`
   ADD UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`);
 
 --
+-- Índices de tabela `mao_obras`
+--
+ALTER TABLE `mao_obras`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `mao_obras_obra_id_foreign` (`obra_id`);
+
+--
 -- Índices de tabela `migrations`
 --
 ALTER TABLE `migrations`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Índices de tabela `obras`
+--
+ALTER TABLE `obras`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -194,6 +321,28 @@ ALTER TABLE `personal_access_tokens`
   ADD KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`);
 
 --
+-- Índices de tabela `rdos`
+--
+ALTER TABLE `rdos`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Índices de tabela `rdo_equipamentos`
+--
+ALTER TABLE `rdo_equipamentos`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `rdo_equipamentos_rdo_id_foreign` (`rdo_id`),
+  ADD KEY `rdo_equipamentos_equipamento_id_foreign` (`equipamento_id`);
+
+--
+-- Índices de tabela `rdo_mao_obras`
+--
+ALTER TABLE `rdo_mao_obras`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `rdo_mao_obras_rdo_id_foreign` (`rdo_id`),
+  ADD KEY `rdo_mao_obras_mao_obra_id_foreign` (`mao_obra_id`);
+
+--
 -- Índices de tabela `users`
 --
 ALTER TABLE `users`
@@ -205,16 +354,34 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT de tabela `equipamentos`
+--
+ALTER TABLE `equipamentos`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de tabela `failed_jobs`
 --
 ALTER TABLE `failed_jobs`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT de tabela `mao_obras`
+--
+ALTER TABLE `mao_obras`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de tabela `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+--
+-- AUTO_INCREMENT de tabela `obras`
+--
+ALTER TABLE `obras`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de tabela `permissions`
@@ -235,10 +402,58 @@ ALTER TABLE `personal_access_tokens`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT de tabela `rdos`
+--
+ALTER TABLE `rdos`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `rdo_equipamentos`
+--
+ALTER TABLE `rdo_equipamentos`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `rdo_mao_obras`
+--
+ALTER TABLE `rdo_mao_obras`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de tabela `users`
 --
 ALTER TABLE `users`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
+--
+-- Restrições para tabelas despejadas
+--
+
+--
+-- Restrições para tabelas `equipamentos`
+--
+ALTER TABLE `equipamentos`
+  ADD CONSTRAINT `equipamentos_obra_id_foreign` FOREIGN KEY (`obra_id`) REFERENCES `obras` (`id`) ON DELETE CASCADE;
+
+--
+-- Restrições para tabelas `mao_obras`
+--
+ALTER TABLE `mao_obras`
+  ADD CONSTRAINT `mao_obras_obra_id_foreign` FOREIGN KEY (`obra_id`) REFERENCES `obras` (`id`) ON DELETE CASCADE;
+
+--
+-- Restrições para tabelas `rdo_equipamentos`
+--
+ALTER TABLE `rdo_equipamentos`
+  ADD CONSTRAINT `rdo_equipamentos_equipamento_id_foreign` FOREIGN KEY (`equipamento_id`) REFERENCES `equipamentos` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `rdo_equipamentos_rdo_id_foreign` FOREIGN KEY (`rdo_id`) REFERENCES `rdos` (`id`) ON DELETE CASCADE;
+
+--
+-- Restrições para tabelas `rdo_mao_obras`
+--
+ALTER TABLE `rdo_mao_obras`
+  ADD CONSTRAINT `rdo_mao_obras_mao_obra_id_foreign` FOREIGN KEY (`mao_obra_id`) REFERENCES `mao_obras` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `rdo_mao_obras_rdo_id_foreign` FOREIGN KEY (`rdo_id`) REFERENCES `rdos` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
