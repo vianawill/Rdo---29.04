@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\MaoObra;
+use App\Models\Obra;
 use Illuminate\Http\Request;
 
 class MaoObraController extends Controller
@@ -25,7 +26,8 @@ class MaoObraController extends Controller
      */
     public function create()
     {
-        return view('mao_obras.create');
+        $obras = Obra::all();  // Recupera todas as obras
+        return view('mao_obras.create', compact('obras'));
     }
 
     /**

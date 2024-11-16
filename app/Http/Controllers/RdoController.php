@@ -30,9 +30,9 @@ class RdoController extends Controller
     {
         $obras = Obra::all();  // Recupera todas as obras
         $equipamentos = Equipamento::all();  // Recupera todos os equipamentos
-        $mao_obras = MaoObra::all();  // Recupera toda a mão de obra
+        $maoObras = MaoObra::all();  // Recupera toda a mão de obra
 
-        return view('rdos.create', compact('obras', 'equipamentos', 'mao_obras'));
+        return view('rdos.create', compact('obras', 'equipamentos', 'maoObras'));
     }
 
     /**
@@ -63,6 +63,25 @@ class RdoController extends Controller
         $rdo->maoObras()->sync($request->mao_obras);
 
         return redirect()->route('rdos.index');
+
+        /* outra sugestão
+         $validated = $request->validate([
+            'obra_id' => 'required|exists:obras,id',
+            'equipamentos' => 'array|required',
+            'mao_obras' => 'array|required',
+        ]);
+
+        // Criação do RDO
+        $rdo = Rdo::create([
+            'obra_id' => $validated['obra_id'],
+        ]);
+
+        // Associar os equipamentos
+        $rdo->equipamentos()->attach($validated['equipamentos']);
+
+        // Associar as mãos de obra
+        $rdo->maoObras()->attach($validated['mao_obras']);
+        */
     }
 
     /**

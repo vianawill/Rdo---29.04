@@ -97,10 +97,10 @@
 
             <!-- Mão de Obra Utilizada (Select com múltiplas opções) -->
             <div class="form-group">
-                <label for="mao_obras">Mão de Obra Utilizada</label>
-                <select class="form-control" id="mao_obras" name="mao_obras[]" multiple required>
-                    @foreach($mao_obras as $mao_obra)
-                        <option value="{{ $mao_obra->id }}">{{ $mao_obra->funcao }} - Quantidade: {{ $mao_obra->quantidade }}</option>
+                <label for="maoObras">Mão de Obra Utilizada</label>
+                <select class="form-control" id="maoObras" name="maoObras[]" multiple required>
+                    @foreach($maoObras as $maoObra)
+                        <option value="{{ $maoObra->id }}">{{ $maoObra->funcao }} - Quantidade: {{ $maoObra->quantidade }}</option>
                     @endforeach
                 </select>
                 <small class="form-text text-muted">Selecione a mão de obra utilizada (mantenha pressionado Ctrl para selecionar múltiplos).</small>

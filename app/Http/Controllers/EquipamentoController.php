@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Equipamento;
+use App\Models\Obra;
 use Illuminate\Http\Request;
 
 class EquipamentoController extends Controller
@@ -25,7 +26,8 @@ class EquipamentoController extends Controller
      */
     public function create()
     {
-        return view('equipamentos.create');
+        $obras = Obra::all();  // Recupera todas as obras
+        return view('equipamentos.create', compact('obras'));
     }
 
     /**

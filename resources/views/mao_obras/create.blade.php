@@ -8,19 +8,20 @@
             @csrf
             <div class="form-group">
                 <label for="funcao">Função do Trabalhador</label>
-                <input type="text" class="form-control" id="funcao" name="funcao" required>
+                <input type="text" class="form-control w-50" id="funcao" name="funcao" required>
             </div>
 
             <div class="form-group">
                 <label for="quantidade">Quantidade de Trabalhadores</label>
-                <input type="number" class="form-control" id="quantidade" name="quantidade" required>
+                <input type="number" class="form-control w-25" id="quantidade" name="quantidade" required>
             </div>
 
             <div class="form-group">
                 <label for="horas_trabalhadas">Horas Trabalhadas</label>
-                <input type="number" step="any" class="form-control" id="horas_trabalhadas" name="horas_trabalhadas" required>
+                <input type="number" step="any" class="form-control w-25" id="horas_trabalhadas" name="horas_trabalhadas" required>
             </div>
 
+            <!-- teste - cadastrar sem esse campo
             <div class="form-group">
                 <label for="obra_id">Obra</label>
                 <select class="form-control" id="obra_id" name="obra_id" required>
@@ -29,6 +30,7 @@
                     @endforeach
                 </select>
             </div>
+            -->
 
             <button type="submit" class="btn btn-primary">Cadastrar Mão de Obra</button>
         </form>

@@ -23,7 +23,5 @@ Route::middleware(['auth'])->group(function() {
     Route::resource('obras', ObraController::class);
     Route::resource('equipamentos', EquipamentoController::class);
     Route::resource('mao_obras', MaoObraController::class);
-
-    //Route::get('/rdo', [RdoController::class, 'rdo'])->name('rdo');
     
 });
