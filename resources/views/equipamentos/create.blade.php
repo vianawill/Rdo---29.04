@@ -16,22 +16,6 @@
                 <input type="text" class="form-control w-50" id="tipo" name="tipo" required>
             </div>
 
-            <div class="form-group">
-                <label for="quantidade">Quantidade</label>
-                <input type="number" step="any" class="form-control w-25" id="quantidade" name="quantidade" required>
-            </div>
-
-            <!-- teste - cadastrar sem esse campo 
-                <div class="form-group">
-                    <label for="obra_id">Obra</label>
-                    <select class="form-control" id="obra_id" name="obra_id" required>
-                        @foreach($obras as $obra)
-                            <option value="{{ $obra->id }}">{{ $obra->objeto_contrato }} - {{ $obra->empresa_contratada }}</option>
-                        @endforeach
-                    </select>
-                </div>
-            -->
-
             <button type="submit" class="btn btn-primary">Cadastrar Equipamento</button>
         </form>
     </div>

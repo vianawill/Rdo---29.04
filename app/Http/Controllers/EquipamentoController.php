@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Equipamento;
-use App\Models\Obra;
 use Illuminate\Http\Request;
 
 class EquipamentoController extends Controller
@@ -26,8 +25,7 @@ class EquipamentoController extends Controller
      */
     public function create()
     {
-        $obras = Obra::all();  // Recupera todas as obras
-        return view('equipamentos.create', compact('obras'));
+        return view('equipamentos.create');
     }
 
     /**
@@ -38,7 +36,17 @@ class EquipamentoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Validação dos dados
+        $validatedData = $request->validate([
+            'nome' => 'required|string|max:255',
+            'tipo' => 'required|string|max:255',
+        ]);
+
+        // Criação do equipamento
+        Equipamento::create($validatedData);
+
+        // Redireciona para a lista de equipamentos com uma mensagem de sucesso
+        return redirect()->route('equipamentos.index')->with('success', 'Equipamento cadastrado com sucesso!');
     }
 
     /**

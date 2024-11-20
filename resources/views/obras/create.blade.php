@@ -4,8 +4,20 @@
     <div class="container">
         <h2>Cadastrar Obra</h2>
 
+        <!-- Exibe mensagens de sucesso ou erro -->
+        @if(session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
+
         <form action="{{ route('obras.store') }}" method="POST">
             @csrf
+            <div class="form-group">
+                <label for="nome">Nome da Obra</label>
+                <input type="text" id="nome" name="nome" class="form-control" required>
+            </div>
+            
             <div class="form-group row">
                 <div class="col-md-6">
                     <label for="empresa_contratada">Empresa Contratada</label>

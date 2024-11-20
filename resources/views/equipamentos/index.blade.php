@@ -18,18 +18,14 @@
         <thead>
             <tr>
                 <th>Nome</th>
-                <th>CPF</th>
-                <th>Email</th>
-                <th>Nível de acesso</th>
+                <th>Tipo</th>
             </tr>
         </thead>
         <tbody>
             @foreach ($equipamentos as $equipamento)
                 <tr>
-                    <td>{{ $equipamento->name }}</td>
-                    <td>{{ $equipamento->cpf }}</td>
-                    <td>{{ $equipamento->email }}</td>
-                    <td>{{ $equipamento->access_level }}</td>
+                    <td>{{ $equipamento->nome }}</td>
+                    <td>{{ $equipamento->tipo }}</td>
                     
                     @can('del-equipamento')
                         <td>

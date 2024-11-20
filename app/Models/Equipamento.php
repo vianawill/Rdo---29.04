@@ -9,6 +9,11 @@ class Equipamento extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'nome',
+        'tipo',
+    ];
+
     // Relacionamento muitos para muitos com Rdo
     public function rdos()
     {
