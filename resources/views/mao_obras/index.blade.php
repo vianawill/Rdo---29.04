@@ -17,19 +17,13 @@
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>Nome</th>
-                <th>CPF</th>
-                <th>Email</th>
-                <th>Nível de acesso</th>
+                <th>Função</th>
             </tr>
         </thead>
         <tbody>
             @foreach ($mao_obras as $mao_obra)
                 <tr>
-                    <td>{{ $mao_obra->name }}</td>
-                    <td>{{ $mao_obra->cpf }}</td>
-                    <td>{{ $mao_obra->email }}</td>
-                    <td>{{ $mao_obra->access_level }}</td>
+                    <td>{{ $mao_obra->funcao }}</td>
                     
                     @can('del-mao_obra')
                         <td>

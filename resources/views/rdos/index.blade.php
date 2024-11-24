@@ -17,19 +17,29 @@
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>Nome</th>
-                <th>CPF</th>
-                <th>Email</th>
-                <th>Nível de acesso</th>
+                <th>Número do RDO</th>
+                <th>Data</th>
+                <th>Dia da semana</th>
+                <th>Obra</th>
+                <th>Manhã</th>
+                <th>Tarde</th>
+                <th>Noite</th>
+                <th>Condição da área</th>
+                <th>Acidente</th>
             </tr>
         </thead>
         <tbody>
             @foreach ($rdos as $rdo)
                 <tr>
-                    <td>{{ $rdo->name }}</td>
-                    <td>{{ $rdo->cpf }}</td>
-                    <td>{{ $rdo->email }}</td>
-                    <td>{{ $rdo->access_level }}</td>
+                    <td>{{ $rdo->numero_rdo }}</td>
+                    <td>{{ $rdo->data }}</td>
+                    <td>{{ $rdo->dia_da_semana }}</td>
+                    <td>{{ $rdo->obra_id }}</td>
+                    <td>{{ $rdo->manha }}</td>
+                    <td>{{ $rdo->tarde }}</td>
+                    <td>{{ $rdo->noite }}</td>
+                    <td>{{ $rdo->condicao_area }}</td>
+                    <td>{{ $rdo->acidente }}</td>
                     
                     @can('del-rdo')
                         <td>

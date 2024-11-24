@@ -9,6 +9,10 @@ class MaoObra extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'funcao',
+    ];
+
     public function rdos()
     {
         // Relacionamento muitos para muitos com Rdo

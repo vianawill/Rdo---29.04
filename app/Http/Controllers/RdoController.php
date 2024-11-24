@@ -43,18 +43,23 @@ class RdoController extends Controller
      */
     public function store(Request $request)
     {
+        // Validação dos dados
+        $validatedData = $request->validate([
+            'numero_rdo' => 'required|string|max:255',
+            'data' => 'required|date',
+            'obra_id' => 'required|exists:obras,id',
+            'dia_da_semana' => 'required|string|max:255',
+            'manha' => 'required|string|max:255',
+            'tarde' => 'required|string|max:255',
+            'noite' => 'required|string|max:255',
+            'condicao_area' => 'required|string|max:255',
+            'acidente' => 'required|string|max:255', // Validação para acidente
+            'equipamentos' => 'array|exists:equipamentos,id', // validação para IDs de equipamentos
+            'mao_obras' => 'array|exists:mao_obras,id', // validação para IDs de mão de obras
+        ]);
+        
         // Criação do RDO
-        $rdo = new Rdo();
-        $rdo->numero_rdo = $request->numero_rdo;
-        $rdo->data = $request->data;
-        $rdo->obra_id = $request->obra_id;
-        $rdo->dia_da_semana = $request->dia_da_semana;
-        $rdo->manha = $request->manha;
-        $rdo->tarde = $request->tarde;
-        $rdo->noite = $request->noite;
-        $rdo->condicao_area = $request->condicao_area;
-        $rdo->acidente = $request->acidente;
-        $rdo->save();
+        $rdo = Rdo::create($validatedData);
 
         // Relacionar equipamentos ao RDO
         $rdo->equipamentos()->sync($request->equipamentos);

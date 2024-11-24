@@ -26,8 +26,7 @@ class MaoObraController extends Controller
      */
     public function create()
     {
-        $obras = Obra::all();  // Recupera todas as obras
-        return view('mao_obras.create', compact('obras'));
+        return view('mao_obras.create');
     }
 
     /**
@@ -38,7 +37,16 @@ class MaoObraController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Validação dos dados
+        $validatedData = $request->validate([
+            'funcao' => 'required|string|max:255',
+        ]);
+                
+        // Criação do equipamento
+        MaoObra::create($validatedData);
+
+        // Redireciona para a lista de mão de obra com uma mensagem de sucesso
+        return redirect()->route('mao_obras.index')->with('success', 'Mão de Obra cadastrada com sucesso!');
     }
 
     /**

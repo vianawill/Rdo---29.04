@@ -9,8 +9,20 @@ class Rdo extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'numero_rdo',
+        'data',
+        'dia_da_semana',
+        'obra_id',
+        'manha',
+        'tarde',
+        'noite',
+        'condicao_area',
+        'acidente',
+    ];
+
     // Relacionamento um para muitos com Obra
-    public function obra()
+    public function obras()
     {
         return $this->belongsTo(Obra::class);
     }
