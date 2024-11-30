@@ -26,6 +26,8 @@
                 <th>Noite</th>
                 <th>Condição da área</th>
                 <th>Acidente</th>
+                <th>Equipamento</th>
+                <th>Mão de Obra</th>
             </tr>
         </thead>
         <tbody>
@@ -40,6 +42,13 @@
                     <td>{{ $rdo->noite }}</td>
                     <td>{{ $rdo->condicao_area }}</td>
                     <td>{{ $rdo->acidente }}</td>
+                    <td>@foreach ($rdo->equipamentos as $equipamento)
+                            <li>{{ $equipamento->nome }}</li>
+                        @endforeach</td>
+                    <td>@foreach ($rdo->maoObras as $maoObra)
+                            <li>{{ $maoObra->funcao }}</li>
+                        @endforeach
+                    </td>
                     
                     @can('del-rdo')
                         <td>

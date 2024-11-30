@@ -59,8 +59,8 @@
                     <label for="manha">Condição da Manhã</label>
                     <select class="form-control" id="manha" name="manha" required>
                         <option value="bom">Bom</option>
-                        <option value="chuva-leve">Chuva leve</option>
-                        <option value="chuva-forte">Chuva forte</option>
+                        <option value="chuva leve">Chuva leve</option>
+                        <option value="chuva forte">Chuva forte</option>
                     </select>
                 </div>
 
@@ -68,8 +68,8 @@
                     <label for="tarde">Condição da Tarde</label>
                     <select class="form-control" id="tarde" name="tarde" required>
                         <option value="bom">Bom</option>
-                        <option value="chuva-leve">Chuva leve</option>
-                        <option value="chuva-forte">Chuva forte</option>
+                        <option value="chuva leve">Chuva leve</option>
+                        <option value="chuva forte">Chuva forte</option>
                     </select>
                 </div>
 
@@ -77,8 +77,8 @@
                     <label for="noite">Condição da Noite</label>
                     <select class="form-control" id="noite" name="noite" required>
                         <option value="bom">Bom</option>
-                        <option value="chuva-leve">Chuva leve</option>
-                        <option value="chuva-forte">Chuva forte</option>
+                        <option value="chuva leve">Chuva leve</option>
+                        <option value="chuva forte">Chuva forte</option>
                     </select>
                 </div>
             </div>
@@ -89,7 +89,7 @@
                     <label for="condicao_area">Condição da Área</label>
                     <select class="form-control" id="condicao_area" name="condicao_area" required>
                         <option value="operavel">Operável</option>
-                        <option value="operavel-parcialmente">Operável parcialmente</option>
+                        <option value="operavel parcialmente">Operável parcialmente</option>
                         <option value="inoperavel">Inoperável</option>
                     </select>
                 </div>
@@ -121,7 +121,7 @@
                 <label for="maoObras">Mão de Obra Utilizada</label>
                 <select class="form-control" id="maoObras" name="maoObras[]" multiple required>
                     @foreach($maoObras as $maoObra)
-                        <option value="{{ $maoObra->id }}">{{ $maoObra->funcao }} - Quantidade: {{ $maoObra->quantidade }}</option>
+                        <option value="{{ $maoObra->id }}">{{ $maoObra->funcao }}</option> <!-- retirei - Quantidade: {{ $maoObra->quantidade }} -->
                     @endforeach
                 </select>
                 <small class="form-text text-muted">Selecione a mão de obra utilizada (mantenha pressionado Ctrl para selecionar múltiplos).</small>

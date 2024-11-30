@@ -18,6 +18,9 @@ class RdoController extends Controller
     public function index()
     {
         $rdos = Rdo::all();
+        $rdos = Rdo::with('equipamentos')->get(); // Recupera todos os RDos com equipamentos associados
+        $rdos = Rdo::with('maoObras')->get(); // Recupera todos os RDos com mão de obras associadas
+
         return view('rdos.index', compact('rdos'));
     }
 
@@ -62,31 +65,16 @@ class RdoController extends Controller
         $rdo = Rdo::create($validatedData);
 
         // Relacionar equipamentos ao RDO
-        $rdo->equipamentos()->sync($request->equipamentos);
-
-        // Relacionar mão de obra ao RDO
-        $rdo->maoObras()->sync($request->mao_obras);
+        if ($request->has('equipamentos')) {
+            $rdo->equipamentos()->sync($request->equipamentos);
+        }
+        
+        // Relacionar mão de obras ao RDO
+        if ($request->has('mao_obras')) {
+            $rdo->maoObras()->sync($request->mao_obras);
+        }
 
         return redirect()->route('rdos.index');
-
-        /* outra sugestão
-         $validated = $request->validate([
-            'obra_id' => 'required|exists:obras,id',
-            'equipamentos' => 'array|required',
-            'mao_obras' => 'array|required',
-        ]);
-
-        // Criação do RDO
-        $rdo = Rdo::create([
-            'obra_id' => $validated['obra_id'],
-        ]);
-
-        // Associar os equipamentos
-        $rdo->equipamentos()->attach($validated['equipamentos']);
-
-        // Associar as mãos de obra
-        $rdo->maoObras()->attach($validated['mao_obras']);
-        */
     }
 
     /**

@@ -17,10 +17,6 @@ class Equipamento extends Model
     // Relacionamento muitos para muitos com Rdo
     public function rdos()
     {
-        return $this->belongsToMany(Rdo::class, 'rdo_equipamento');
-        
-        /* modelo sugerido antes
-        return $this->belongsToMany(Rdo::class, 'rdo_equipamento', 'equipamento_id', 'rdo_id');
-        */
+        return $this->belongsToMany(Rdo::class, 'rdo_equipamentos');
     }
 }

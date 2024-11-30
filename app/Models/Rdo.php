@@ -30,20 +30,12 @@ class Rdo extends Model
     // Relacionamento muitos para muitos com Equipamento
     public function equipamentos()
     {
-        return $this->belongsToMany(Equipamento::class, 'rdo_equipamento');
-
-        /* modelo sugerido antes
-        return $this->belongsToMany(Equipamento::class, 'rdo_equipamento', 'rdo_id', 'equipamento_id');
-        */
+        return $this->belongsToMany(Equipamento::class, 'rdo_equipamentos');
     }
 
     // Relacionamento muitos para muitos com MaoObra
     public function maoObras()
     {
-        return $this->belongsToMany(MaoObra::class, 'rdo_mao_obra');
-        
-        /* modelo sugerido antes
-        return $this->belongsToMany(MaoObra::class, 'rdo_mao_obra', 'rdo_id', 'mao_obra_id');
-        */
+        return $this->belongsToMany(MaoObra::class, 'rdo_mao_obras');
     }
 }
