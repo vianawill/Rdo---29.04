@@ -27,7 +27,7 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         //
-        Gate::define('del-user', function (User $user) {
+        Gate::define('editar-deletar', function (User $user) {
             return $user->access_level === 1;
         });
     }

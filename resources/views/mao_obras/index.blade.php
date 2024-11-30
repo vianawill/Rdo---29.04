@@ -25,7 +25,7 @@
                 <tr>
                     <td>{{ $mao_obra->funcao }}</td>
                     
-                    @can('del-mao_obra')
+                    @can('editar-deletar')
                         <td>
                             <a href="{{ route('mao_obras.edit', $mao_obra) }}" class="btn btn-warning">Editar</a>
                             <form action="{{ route('mao_obras.destroy', $mao_obra) }}" method="POST" style="display:inline;">

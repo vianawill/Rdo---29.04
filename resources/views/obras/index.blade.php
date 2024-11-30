@@ -42,7 +42,7 @@
                     <td>{{ $obra->data_prevista_termino_obra }}</td>
                     <td>{{ $obra->data_real_termino_obra ?? 'N/A' }}</td>
                     
-                    @can('del-obra')
+                    @can('editar-deletar')
                         <td>
                             <a href="{{ route('obras.edit', $obra) }}" class="btn btn-warning">Editar</a>
                             <form action="{{ route('obras.destroy', $obra) }}" method="POST" style="display:inline;">

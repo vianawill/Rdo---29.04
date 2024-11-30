@@ -50,7 +50,7 @@
                         @endforeach
                     </td>
                     
-                    @can('del-rdo')
+                    @can('editar-deletar')
                         <td>
                             <a href="{{ route('rdos.edit', $rdo) }}" class="btn btn-warning">Editar</a>
                             <form action="{{ route('rdos.destroy', $rdo) }}" method="POST" style="display:inline;">

@@ -31,7 +31,7 @@
                     <td>{{ $user->email }}</td>
                     <td>{{ $user->access_level }}</td>
                     
-                    @can('del-user')
+                    @can('editar-deletar')
                         <td>
                             <a href="{{ route('users.edit', $user) }}" class="btn btn-warning">Editar</a>
                             <form action="{{ route('users.destroy', $user) }}" method="POST" style="display:inline;">
