@@ -2,23 +2,25 @@
 
 @section('content')
     <h1>Editar Usuário</h1>
+    <div class="container">
+        <form action="{{ route('users.update', $user) }}" method="POST">
+            @csrf
+            @method('PUT')
+            <div class="form-group row">
+                <label for="name">Nome</label>
+                <input type="text" name="name" value="{{ $user->name }}" required>
+                
+                <label for="cpf">CPF</label>
+                <input type="text" name="cpf" value="{{ $user->cpf }}" required>
 
-    <form action="{{ route('users.update', $user) }}" method="POST">
-        @csrf
-        @method('PUT')
-        
-        <label for="name">Nome</label>
-        <input type="text" name="name" value="{{ $user->name }}" required>
-        
-        <label for="cpf">CPF</label>
-        <input type="text" name="cpf" value="{{ $user->cpf }}" required>
+                <label for="email">Email</label>
+                <input type="email" name="email" value="{{ $user->email }}" required>
 
-        <label for="email">Email</label>
-        <input type="email" name="email" value="{{ $user->email }}" required>
+                <label for="password">Senha (deixe em branco para manter a mesma)</label>
+                <input type="password" name="password">
+            </div>
 
-        <label for="password">Senha (deixe em branco para manter a mesma)</label>
-        <input type="password" name="password">
-
-        <button type="submit">Atualizar</button>
-    </form>
+            <button type="submit">Atualizar</button>
+        </form>
+    </div>
 @endsection

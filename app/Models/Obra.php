@@ -23,6 +23,6 @@ class Obra extends Model
 
     public function rdos()
     {
-        return $this->hasMany(Rdo::class);
+        return $this->hasMany(Rdo::class, 'obra_id', 'id');
     }
 }

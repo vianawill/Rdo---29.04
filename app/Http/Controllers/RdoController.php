@@ -18,6 +18,7 @@ class RdoController extends Controller
     public function index()
     {
         $rdos = Rdo::all();
+        $rdos = Rdo::with('obras')->get(); // Recupera todos os RDos com obras associadas
         $rdos = Rdo::with('equipamentos')->get(); // Recupera todos os RDos com equipamentos associados
         $rdos = Rdo::with('maoObras')->get(); // Recupera todos os RDos com mão de obras associadas
 
@@ -33,7 +34,7 @@ class RdoController extends Controller
     {
         $obras = Obra::all();  // Recupera todas as obras
         $equipamentos = Equipamento::all();  // Recupera todos os equipamentos
-        $maoObras = MaoObra::all();  // Recupera toda a mão de obra
+        $maoObras = MaoObra::all();  // Recupera todas as mãos de obra
 
         return view('rdos.create', compact('obras', 'equipamentos', 'maoObras'));
     }
@@ -58,11 +59,16 @@ class RdoController extends Controller
             'condicao_area' => 'required|string|max:255',
             'acidente' => 'required|string|max:255', // Validação para acidente
             'equipamentos' => 'array|exists:equipamentos,id', // validação para IDs de equipamentos
-            'mao_obras' => 'array|exists:mao_obras,id', // validação para IDs de mão de obras
+            'maoobras' => 'array|exists:maoobras,id', // validação para IDs de mão de obras
         ]);
         
         // Criação do RDO
         $rdo = Rdo::create($validatedData);
+
+        // Relacionar obras ao RDO
+        if ($request->has('obras')) {
+            $rdo->Obras()->sync($request->obras);
+        }
 
         // Relacionar equipamentos ao RDO
         if ($request->has('equipamentos')) {
@@ -85,7 +91,9 @@ class RdoController extends Controller
      */
     public function show(Rdo $rdo)
     {
-        //
+        $rdo_equipamento = $rdo->equipamentos;  // Recupera os equipamentos relacionados a este RDO
+        $rdo_mao_obra = $rdo->maoObras;  // Recupera as mãos de obra relacionadas a este RDO
+        return view('rdos.show', compact('rdo', 'rdo_equipamento', 'rdo_mao_obra'));
     }
 
     /**
@@ -96,7 +104,10 @@ class RdoController extends Controller
      */
     public function edit(Rdo $rdo)
     {
-        //
+        $obras = Obra::all();  // Recupera todas as obras
+        $equipamentos = Equipamento::all();  // Recupera todos os equipamentos
+        $maoObras = MaoObra::all();  // Recupera todas as mãos de obra
+        return view('rdos.edit', compact('rdo', 'obras', 'equipamentos', 'maoObras'));
     }
 
     /**
@@ -108,7 +119,8 @@ class RdoController extends Controller
      */
     public function update(Request $request, Rdo $rdo)
     {
-        //
+        $rdo->update($request->all());
+        return redirect()->route('rdos.index');
     }
 
     /**
@@ -119,6 +131,7 @@ class RdoController extends Controller
      */
     public function destroy(Rdo $rdo)
     {
-        //
+        $rdo -> delete();
+        return redirect()->route('rdos.index')->with('success', 'RDO excluído com sucesso.');
     }
 }

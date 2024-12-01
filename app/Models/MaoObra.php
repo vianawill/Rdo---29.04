@@ -16,6 +16,6 @@ class MaoObra extends Model
     public function rdos()
     {
         // Relacionamento muitos para muitos com Rdo
-        return $this->belongsToMany(Rdo::class, 'rdo_mao_obras');
+        return $this->belongsToMany(Rdo::class, 'rdo_mao_obras', 'mao_obra_id', 'rdo_id');
     }
 }

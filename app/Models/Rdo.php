@@ -24,7 +24,7 @@ class Rdo extends Model
     // Relacionamento um para muitos com Obra
     public function obras()
     {
-        return $this->belongsTo(Obra::class);
+        return $this->belongsTo(Obra::class, 'obra_id', 'id');
     }
     
     // Relacionamento muitos para muitos com Equipamento
@@ -36,6 +36,6 @@ class Rdo extends Model
     // Relacionamento muitos para muitos com MaoObra
     public function maoObras()
     {
-        return $this->belongsToMany(MaoObra::class, 'rdo_mao_obras');
+        return $this->belongsToMany(MaoObra::class, 'rdo_mao_obras', 'rdo_id', 'mao_obra_id');
     }
 }

@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1>RDOs</h1>
+        <h1>Lista de RDOs</h1>
         <a href="{{ route('rdos.create') }}" class="btn btn-primary">Cadastrar RDO</a>
     </div>
     @if (session('success'))
@@ -49,17 +49,18 @@
                             <li>{{ $maoObra->funcao }}</li>
                         @endforeach
                     </td>
-                    
-                    @can('editar-deletar')
+
                         <td>
-                            <a href="{{ route('rdos.edit', $rdo) }}" class="btn btn-warning">Editar</a>
-                            <form action="{{ route('rdos.destroy', $rdo) }}" method="POST" style="display:inline;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger">Excluir</button>
-                            </form>
+                            <a href="{{ route('rdos.show', $rdo) }}" class="btn btn-warning">Abrir</a>
+                            @can('editar-deletar')
+                                <a href="{{ route('rdos.edit', $rdo) }}" class="btn btn-warning">Editar</a>
+                                <form action="{{ route('rdos.destroy', $rdo) }}" method="POST" style="display:inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger">Excluir</button>
+                                </form>
+                            @endcan
                         </td>
-                    @endcan
                 </tr>
             @endforeach
         </tbody>

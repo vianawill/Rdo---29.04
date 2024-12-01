@@ -42,7 +42,7 @@ class MaoObraController extends Controller
             'funcao' => 'required|string|max:255',
         ]);
                 
-        // Criação do equipamento
+        // Criação da mão de obra
         MaoObra::create($validatedData);
 
         // Redireciona para a lista de mão de obra com uma mensagem de sucesso

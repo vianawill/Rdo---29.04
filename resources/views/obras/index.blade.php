@@ -41,6 +41,7 @@
                     <td>{{ $obra->data_real_inicio_obra ?? 'N/A' }}</td>
                     <td>{{ $obra->data_prevista_termino_obra }}</td>
                     <td>{{ $obra->data_real_termino_obra ?? 'N/A' }}</td>
+                    <td>{{ $obra->descricao }}</td>
                     
                     @can('editar-deletar')
                         <td>
