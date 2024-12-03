@@ -48,7 +48,7 @@
                 <label for="obra_id">Obra</label>
                 <select class="form-control" id="obra_id" name="obra_id" required>
                     @foreach($obras as $obra)
-                        <option value="{{ $obra->id }}">{{ $obra->objeto_contrato }} - {{ $obra->empresa_contratada }}</option>
+                        <option value="{{ $obra->id }}">{{ $obra->empresa_contratada }}</option>
                     @endforeach
                 </select>
             </div>
@@ -119,9 +119,9 @@
             <!-- Mão de Obra Utilizada (Select com múltiplas opções) -->
             <div class="form-group">
                 <label for="maoObras">Mão de Obra Utilizada</label>
-                <select class="form-control" id="maoObras" name="maoObras[]" multiple required>
+                <select class="form-control" id="maoObras" name="mao_obras[]" multiple required> <!-- name="mao_obras[]" faz referência com a tabela -->
                     @foreach($maoObras as $maoObra)
-                        <option value="{{ $maoObra->id }}">{{ $maoObra->funcao }}</option> <!-- retirei - Quantidade: {{ $maoObra->quantidade }} -->
+                        <option value="{{ $maoObra->id }}">{{ $maoObra->funcao }}</option>
                     @endforeach
                 </select>
                 <small class="form-text text-muted">Selecione a mão de obra utilizada (mantenha pressionado Ctrl para selecionar múltiplos).</small>

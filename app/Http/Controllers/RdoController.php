@@ -59,7 +59,7 @@ class RdoController extends Controller
             'condicao_area' => 'required|string|max:255',
             'acidente' => 'required|string|max:255', // Validação para acidente
             'equipamentos' => 'array|exists:equipamentos,id', // validação para IDs de equipamentos
-            'maoobras' => 'array|exists:maoobras,id', // validação para IDs de mão de obras
+            'maoobras' => 'array|exists:maoobras,id', // continua funcionando - teste: estava mao_obras,id - vou alterar para maoobras,id - se falhar no cadstro de rdo, refere-se ao nome da tabela. // validação para IDs de mão de obras
         ]);
         
         // Criação do RDO
@@ -76,8 +76,8 @@ class RdoController extends Controller
         }
         
         // Relacionar mão de obras ao RDO
-        if ($request->has('mao_obras')) {
-            $rdo->maoObras()->sync($request->mao_obras);
+        if ($request->has('mao_obras')) { // tem referência com a tabela, fiz testes
+            $rdo->maoobras()->sync($request->mao_obras); // tem referência com a tabela, fiz testes
         }
 
         return redirect()->route('rdos.index');

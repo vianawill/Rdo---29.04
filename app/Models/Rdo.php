@@ -24,18 +24,18 @@ class Rdo extends Model
     // Relacionamento um para muitos com Obra
     public function obras()
     {
-        return $this->belongsTo(Obra::class, 'obra_id', 'id');
+        return $this->belongsTo(Obra::class, 'obra_id'); // retirei , 'id'
     }
     
     // Relacionamento muitos para muitos com Equipamento
     public function equipamentos()
     {
-        return $this->belongsToMany(Equipamento::class, 'rdo_equipamentos');
+        return $this->belongsToMany(Equipamento::class, 'rdo_equipamentos'); // 'rdo_equipamentos' é a tabela de relacionamento entre rdos e equipamentos, se retirar o Laravel busca por equipamento_rdo (que não existe)
     }
 
     // Relacionamento muitos para muitos com MaoObra
     public function maoObras()
     {
-        return $this->belongsToMany(MaoObra::class, 'rdo_mao_obras', 'rdo_id', 'mao_obra_id');
+        return $this->belongsToMany(MaoObra::class, 'rdo_mao_obras'); // retirei , 'rdo_id', 'mao_obra_id'
     }
 }
