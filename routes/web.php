@@ -19,6 +19,7 @@ Route::middleware(['auth'])->group(function() {
 
     Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::resource('users', UserController::class);
+    Route::get('/rdos/{rdo}/pdf', [RdoController::class, 'gerarPDF'])->name('rdos.pdf');
     Route::resource('rdos', RdoController::class);
     Route::resource('obras', ObraController::class);
     Route::resource('equipamentos', EquipamentoController::class);

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\Rdo;
 use App\Models\Obra;
 use App\Models\Equipamento;
@@ -94,6 +95,15 @@ class RdoController extends Controller
         $rdo_equipamento = $rdo->equipamentos;  // Recupera os equipamentos relacionados a este RDO
         $rdo_mao_obra = $rdo->maoObras;  // Recupera as mãos de obra relacionadas a este RDO
         return view('rdos.show', compact('rdo', 'rdo_equipamento', 'rdo_mao_obra'));
+    }
+
+    public function gerarPdf(Rdo $rdo) 
+    {
+        set_time_limit('300'); // define o tempo máximo em 300 segundos
+        $rdo_equipamento = $rdo->equipamentos;  // Recupera os equipamentos relacionados a este RDO
+        $rdo_mao_obra = $rdo->maoObras;  // Recupera as mãos de obra relacionadas a este RDO
+        $pdf = Pdf::loadView('rdos.pdf', compact('rdo', 'rdo_equipamento', 'rdo_mao_obra'));
+        return $pdf->stream(); // retirei ('rdo_' . $rdo->id . '.pdf')
     }
 
     /**

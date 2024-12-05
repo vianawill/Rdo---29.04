@@ -17,50 +17,53 @@
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>Número do RDO</th>
+                <th>RDO</th>
                 <th>Data</th>
-                <th>Dia da semana</th>
                 <th>Obra</th>
-                <th>Manhã</th>
-                <th>Tarde</th>
-                <th>Noite</th>
-                <th>Condição da área</th>
-                <th>Acidente</th>
-                <th>Equipamento</th>
-                <th>Mão de Obra</th>
+                <th>Empresa Contratada</th>
+                <th>Objeto do Contrato</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
             @foreach ($rdos as $rdo)
                 <tr>
                     <td>{{ $rdo->numero_rdo }}</td>
-                    <td>{{ $rdo->data }}</td>
-                    <td>{{ $rdo->dia_da_semana }}</td>
-                    <td>{{ $rdo->obra_id }}</td>
-                    <td>{{ $rdo->manha }}</td>
-                    <td>{{ $rdo->tarde }}</td>
-                    <td>{{ $rdo->noite }}</td>
-                    <td>{{ $rdo->condicao_area }}</td>
-                    <td>{{ $rdo->acidente }}</td>
-                    <td>@foreach ($rdo->equipamentos as $equipamento)
-                            <li>{{ $equipamento->nome }}</li>
-                        @endforeach</td>
-                    <td>@foreach ($rdo->maoObras as $maoObra)
-                            <li>{{ $maoObra->funcao }}</li>
-                        @endforeach
+                    <td>{{ \Carbon\Carbon::parse($rdo->data)->format('d/m/Y') }}</td>
+                    <td>{{ $rdo->obras->nome }}</td>
+                    <td>{{ $rdo->obras->empresa_contratada }}</td>
+                    <td>{{ $rdo->obras->objeto_contrato }}</td>        
+                        <!-- <thead> // tirei para ficar mais limpo a tela de index
+                                <tr>
+                                    <th>Condição da área</th>
+                                    <th>Acidente</th>
+                                    <th>Equipamento</th>
+                                    <th>Mão de Obra</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>{{ $rdo->condicao_area }}</td>
+                                    <td>{{ $rdo->acidente }}</td>
+                                    <td>@foreach ($rdo->equipamentos as $equipamento)
+                                            <li>{{ $equipamento->nome }}</li>
+                                        @endforeach</td>
+                                    <td>@foreach ($rdo->maoObras as $maoObra)
+                                            <li>{{ $maoObra->funcao }}</li>
+                                        @endforeach
+                                    </td> 
+                                </tr>   -->
+                    <td>
+                        <a href="{{ route('rdos.show', $rdo) }}" class="btn btn-info">Abrir</a>
+                        @can('editar-deletar')
+                            <a href="{{ route('rdos.edit', $rdo) }}" class="btn btn-warning">Editar</a>
+                            <form action="{{ route('rdos.destroy', $rdo) }}" method="POST" style="display:inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger">Excluir</button>
+                            </form>
+                        @endcan
                     </td>
-
-                        <td>
-                            <a href="{{ route('rdos.show', $rdo) }}" class="btn btn-warning">Abrir</a>
-                            @can('editar-deletar')
-                                <a href="{{ route('rdos.edit', $rdo) }}" class="btn btn-warning">Editar</a>
-                                <form action="{{ route('rdos.destroy', $rdo) }}" method="POST" style="display:inline;">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-danger">Excluir</button>
-                                </form>
-                            @endcan
-                        </td>
                 </tr>
             @endforeach
         </tbody>

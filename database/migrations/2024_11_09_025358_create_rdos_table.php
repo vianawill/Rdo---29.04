@@ -29,7 +29,7 @@ class CreateRdosTable extends Migration
             $table->enum('condicao_area', ['Operável', 'Operável parcialmente', 'Inoperável']);
     
             // Campo para acidentes
-            $table->enum('acidente', ['Nao houve', 'Sem afastamento', 'Com afastamento']);
+            $table->enum('acidente', ['Não houve', 'Sem afastamento', 'Com afastamento']);
 
             $table->timestamps();
         });
