@@ -16,10 +16,13 @@ class CreateMaoObrasTable extends Migration
         Schema::create('mao_obras', function (Blueprint $table) {
             $table->id();
             $table->string('funcao'); // Função do trabalhador (ex: pedreiro, carpinteiro, etc.)
+            $table->timestamps();
+
+            /* Removidas
             $table->integer('quantidade'); // Quantidade de trabalhadores dessa função
             $table->decimal('horas_trabalhadas', 10, 2); // Horas trabalhadas no dia
             $table->foreignId('obra_id')->constrained('obras')->onDelete('cascade'); // Relacionamento com a tabela 'obras'
-            $table->timestamps();
+            */
         });
     }
 

@@ -16,10 +16,15 @@ class CreateEquipamentosTable extends Migration
         Schema::create('equipamentos', function (Blueprint $table) {
             $table->id();
             $table->string('nome'); // Nome do equipamento
-            $table->string('tipo'); // Tipo do equipamento (ex: "Escavadeira", "Betoneira", etc.)
+            $table->string('tipo'); // Tipo do equipamento
+            $table->timestamps();
+            
+            /* Removidas
             $table->decimal('quantidade', 10, 2); // Quantidade do equipamento (em unidades ou horas de uso)
             $table->foreignId('obra_id')->constrained('obras')->onDelete('cascade'); // Relacionamento com a tabela 'obras'
-            $table->timestamps();
+            // Adiciona chave estrangeira caso necessário
+            $table->foreign('obra_id')->references('id')->on('obras')->onDelete('set null');
+            */
         });
     }
 

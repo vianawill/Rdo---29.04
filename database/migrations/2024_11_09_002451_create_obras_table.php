@@ -23,6 +23,7 @@ class CreateObrasTable extends Migration
             $table->date('data_real_inicio_obra')->nullable();
             $table->date('data_prevista_termino_obra');
             $table->date('data_real_termino_obra')->nullable();
+            $table->text('descricao')->nullable(); // adicionado
             $table->timestamps();
         });
     }
