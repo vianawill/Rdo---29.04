@@ -16,7 +16,6 @@ class CreateClimasTable extends Migration
         Schema::create('climas', function (Blueprint $table) {
             $table->id();
             $table->string('clima')->unique(); // Bom, Chuva leve, Chuva forte
-            
             $table->timestamps();
 
             /* Removidas
