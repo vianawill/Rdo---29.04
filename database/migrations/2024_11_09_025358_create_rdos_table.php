@@ -33,8 +33,7 @@ class CreateRdosTable extends Migration
             $table->unsignedBigInteger('turno_id_noite');
             $table->unsignedBigInteger('clima_id_noite');
 
-            // definindo as chaves estrangeiras
-            // antes adicionado por outra migration
+            // definindo as chaves estrangeiras, antes adicionado por outra migration
             $table->foreign('turno_id_manha')->references('id')->on('turnos')->onDelete('cascade');
             $table->foreign('clima_id_manha')->references('id')->on('climas')->onDelete('cascade');
             
@@ -45,12 +44,7 @@ class CreateRdosTable extends Migration
             $table->foreign('clima_id_noite')->references('id')->on('climas')->onDelete('cascade');
     
             
-            
-            // Campo para condições da área
-            $table->enum('condicao_area', ['Operável', 'Operável parcialmente', 'Inoperável']);
-    
-            // Campo para acidentes
-            $table->enum('acidente', ['Não houve', 'Sem afastamento', 'Com afastamento']);
+           
 
             $table->timestamps();
 
@@ -62,6 +56,10 @@ class CreateRdosTable extends Migration
             $table->enum('manha', ['Bom', 'Chuva leve', 'Chuva forte']);
             $table->enum('tarde', ['Bom', 'Chuva leve', 'Chuva forte']);
             $table->enum('noite', ['Bom', 'Chuva leve', 'Chuva forte']);
+            // Campo para condições da área
+            $table->enum('condicao_area', ['Operável', 'Operável parcialmente', 'Inoperável']);
+            // Campo para acidentes
+            $table->enum('acidente', ['Não houve', 'Sem afastamento', 'Com afastamento']);
             */
         });
     }
