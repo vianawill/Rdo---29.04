@@ -43,7 +43,12 @@ class CreateRdosTable extends Migration
             $table->foreign('turno_id_noite')->references('id')->on('turnos')->onDelete('cascade');
             $table->foreign('clima_id_noite')->references('id')->on('climas')->onDelete('cascade');
     
-            
+            // adiciona chave estrangeira para condicao_id
+            $table->foreign('condicao_id')->references('id')->on('condicao_areas')->onDelete('cascade');
+            // adiciona chave estrangeira para acidente_id
+            $table->foreign('acidente_id')->references('id')->on('acidentes')->onDelete('cascade');
+            // adiciona chave estrangeira para clima_id
+            $table->foreign('clima_id')->references('id')->on('climas')->onDelete('cascade');
            
 
             $table->timestamps();
