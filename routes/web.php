@@ -19,7 +19,10 @@ Route::middleware(['auth'])->group(function() {
 
     Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::resource('users', UserController::class);
+    Route::post('/rdos/{rdo}/aprovar', [RdoController::class, 'aprovar'])->name('rdos.aprovar');
     Route::get('/rdos/{rdo}/pdf', [RdoController::class, 'gerarPDF'])->name('rdos.pdf');
+    Route::post('/rdo/{id}/aprovar', [RdoController::class, 'aprovar']);
+
     Route::resource('rdos', RdoController::class);
     Route::resource('obras', ObraController::class);
     Route::resource('equipamentos', EquipamentoController::class);

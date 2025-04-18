@@ -27,7 +27,7 @@
                     <td>{{ $equipamento->nome }}</td>
                     <td>{{ $equipamento->tipo }}</td>
                     
-                    @can('editar-deletar')
+                    @can('acoes-gerente')
                         <td>
                             <a href="{{ route('equipamentos.edit', $equipamento) }}" class="btn btn-warning">Editar</a>
                             <form action="{{ route('equipamentos.destroy', $equipamento) }}" method="POST" style="display:inline;">

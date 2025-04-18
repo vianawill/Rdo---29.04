@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -71,8 +72,18 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        $user->update($request->all());
-        return redirect()->route('users.index');
+        $data = $request->all();
+        
+        if (!empty($data['password'])) { // Se a senha for preenchida, criptografa
+            $data['password'] = Hash::make($data['password']);
+        } else {
+        
+        unset($data['password']); // Se não for preenchida, não sobrescreve a atual
+        }
+
+        $user->update($data);
+
+        return redirect()->route('users.index')->with('success', 'Usuário atualizado com sucesso!');
     }
 
     /**

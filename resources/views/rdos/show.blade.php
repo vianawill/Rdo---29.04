@@ -1,6 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
+@if(session('success'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ session('success') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
+    </div>
+@endif
+
     <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-md-8">
@@ -85,8 +92,20 @@
                                 </div>
 
                                 <div class="mt-4">
-                                    <a href="{{ route('rdos.index') }}" class="btn btn-secondary">Voltar para a lista</a>
-                                    <a href="{{ route('rdos.pdf', $rdo->id) }}" class="btn btn-secondary" target="_blank">Gerar PDF</a>
+                                    <a href="{{ route('rdos.index') }}" class="btn btn-sm btn-secondary"><i class="bi-backspace"></i> Voltar</a>
+                                    
+                                    <form action="{{ route('rdos.aprovar', $rdo->id) }}" method="POST" style="display:inline">
+                                        @csrf
+                                        
+                                            @if ($rdo->status != 'Aprovado')
+                                                <button class="btn-sm btn-success" type="submit">
+                                                <i class="bi bi-check-circle"></i> Aprovar</button>
+                                            @endif
+                                    </form>
+                                    
+                                    <button class="btn-sm btn-danger"><i class="bi bi-file-x"></i> Reprovar</button>
+                                    
+                                    <a href="{{ route('rdos.pdf', $rdo->id) }}" class="btn btn-sm btn-secondary" target="_blank"><i class="bi-file-pdf"></i>Gerar PDF</a>
                                 </div>
                             </div>
                         </div>

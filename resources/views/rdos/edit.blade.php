@@ -1,8 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1>Editar RDO</h1>
+    
     <div class="container">
+        <h1>Editar RDO</h1>
         <form action="{{ route('rdos.update', $rdo) }}" method="POST">
             @csrf
             @method('PUT')

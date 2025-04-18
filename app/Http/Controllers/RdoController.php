@@ -8,6 +8,7 @@ use App\Models\Obra;
 use App\Models\Equipamento;
 use App\Models\MaoObra;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class RdoController extends Controller
 {
@@ -94,6 +95,7 @@ class RdoController extends Controller
     {
         $rdo_equipamento = $rdo->equipamentos;  // Recupera os equipamentos relacionados a este RDO
         $rdo_mao_obra = $rdo->maoObras;  // Recupera as mãos de obra relacionadas a este RDO
+
         return view('rdos.show', compact('rdo', 'rdo_equipamento', 'rdo_mao_obra'));
     }
 
@@ -103,6 +105,7 @@ class RdoController extends Controller
         $rdo_equipamento = $rdo->equipamentos;  // Recupera os equipamentos relacionados a este RDO
         $rdo_mao_obra = $rdo->maoObras;  // Recupera as mãos de obra relacionadas a este RDO
         $pdf = Pdf::loadView('rdos.pdf', compact('rdo', 'rdo_equipamento', 'rdo_mao_obra'));
+
         return $pdf->stream(); // retirei ('rdo_' . $rdo->id . '.pdf')
     }
 
@@ -117,6 +120,7 @@ class RdoController extends Controller
         $obras = Obra::all();  // Recupera todas as obras
         $equipamentos = Equipamento::all();  // Recupera todos os equipamentos
         $maoObras = MaoObra::all();  // Recupera todas as mãos de obra
+
         return view('rdos.edit', compact('rdo', 'obras', 'equipamentos', 'maoObras'));
     }
 
@@ -130,6 +134,7 @@ class RdoController extends Controller
     public function update(Request $request, Rdo $rdo)
     {
         $rdo->update($request->all());
+
         return redirect()->route('rdos.index');
     }
 
@@ -142,6 +147,48 @@ class RdoController extends Controller
     public function destroy(Rdo $rdo)
     {
         $rdo -> delete();
+
         return redirect()->route('rdos.index')->with('success', 'RDO excluído com sucesso.');
     }
+    
+    public function aprovar(Rdo $rdo)
+    {
+        $gerente = Auth::user(); // gerente logado
+        $rdo = Rdo::findOrFail($id); // busca o RDO
+
+        // Verifica se o gerente já aprovou (evita duplicidade)
+        if ($rdo->aprovado_por) {
+            return response()->json([
+                'message' => 'Este RDO já foi aprovado.'
+            ], 400);
+        }
+
+        // Monta os dados para o hash
+        $dados = $gerente->id . '|' .
+                $gerente->name . '|' .
+                $gerente->email . '|' .
+                $rdo->id . '|' .
+                now()->toDateTimeString();
+
+        // Gera o hash com SHA-256
+        $hash = hash('sha256', $dados);
+
+        // Atualiza o RDO
+        $rdo->aprovado_por = $gerente->id;
+        $rdo->aprovado_em = now();
+        $rdo->hash_aprovacao = $hash;
+        $rdo->status = 'Aprovado';
+        $rdo->save();
+
+        return response()->json([
+            'message' => 'RDO aprovado com sucesso!',
+            'hash_aprovacao' => $hash,
+            'aprovado_por' => $gerente->name,
+            'aprovado_em' => $rdo->aprovado_em->format('d/m/Y H:i')
+        ]);
+
+        return redirect()->route('rdos.index')->with('success', "RDO {$rdo->numero_rdo} aprovado com sucesso!");
+
+    }
+
 }

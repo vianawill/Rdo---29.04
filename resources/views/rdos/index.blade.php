@@ -22,7 +22,7 @@
                 <th>Obra</th>
                 <th>Empresa Contratada</th>
                 <th>Objeto do Contrato</th>
-                <th></th>
+                <th>Status</th>
             </tr>
         </thead>
         <tbody>
@@ -33,6 +33,7 @@
                     <td>{{ $rdo->obras->nome }}</td>
                     <td>{{ $rdo->obras->empresa_contratada }}</td>
                     <td>{{ $rdo->obras->objeto_contrato }}</td>        
+                    <td>{{ $rdo->status }}</td>        
                         <!-- <thead> // tirei para ficar mais limpo a tela de index
                                 <tr>
                                     <th>Condição da área</th>
@@ -55,7 +56,7 @@
                                 </tr>   -->
                     <td>
                         <a href="{{ route('rdos.show', $rdo) }}" class="btn btn-info">Abrir</a>
-                        @can('editar-deletar')
+                        @can('acoes-gerente')
                             <a href="{{ route('rdos.edit', $rdo) }}" class="btn btn-warning">Editar</a>
                             <form action="{{ route('rdos.destroy', $rdo) }}" method="POST" style="display:inline;">
                                 @csrf

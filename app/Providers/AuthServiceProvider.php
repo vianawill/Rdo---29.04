@@ -26,9 +26,9 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
-        Gate::define('editar-deletar', function (User $user) {
-            return $user->access_level === 1;
+        // dá poderes ao gerente
+        Gate::define('acoes-gerente', function (User $user) {
+            return $user->tipo === 'gerente';
         });
     }
 }
