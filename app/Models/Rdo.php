@@ -38,4 +38,10 @@ class Rdo extends Model
     {
         return $this->belongsToMany(MaoObra::class, 'rdo_mao_obras'); // retirei , 'rdo_id', 'mao_obra_id'
     }
+    
+    // Relacionamento um para muitos com User
+    public function users()
+    {
+        return $this->belongsTo(User::class, 'aprovado_por'); 
+    }
 }

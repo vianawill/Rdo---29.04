@@ -101,12 +101,15 @@ class RdoController extends Controller
 
     public function gerarPdf(Rdo $rdo) 
     {
-        set_time_limit('300'); // define o tempo máximo em 300 segundos
+        set_time_limit('60'); // define o tempo máximo em 60 segundos
         $rdo_equipamento = $rdo->equipamentos;  // Recupera os equipamentos relacionados a este RDO
         $rdo_mao_obra = $rdo->maoObras;  // Recupera as mãos de obra relacionadas a este RDO
-        $pdf = Pdf::loadView('rdos.pdf', compact('rdo', 'rdo_equipamento', 'rdo_mao_obra'));
+        $rdo_gerente = $rdo->users;  // Recupera os usuários relacionados a este RDO
+        
+        // Gera o pdf com os dados necessários
+        $pdf = Pdf::loadView('rdos.pdf', compact('rdo', 'rdo_equipamento', 'rdo_mao_obra', 'rdo_gerente'));
 
-        return $pdf->stream(); // retirei ('rdo_' . $rdo->id . '.pdf')
+        return $pdf->stream(); // visualiza no navegador
     }
 
     /**
@@ -154,7 +157,6 @@ class RdoController extends Controller
     public function aprovar(Rdo $rdo)
     {
         $gerente = Auth::user(); // gerente logado
-        $rdo = Rdo::findOrFail($id); // busca o RDO
 
         // Verifica se o gerente já aprovou (evita duplicidade)
         if ($rdo->aprovado_por) {
@@ -163,29 +165,53 @@ class RdoController extends Controller
             ], 400);
         }
 
-        // Monta os dados para o hash
-        $dados = $gerente->id . '|' .
-                $gerente->name . '|' .
-                $gerente->email . '|' .
-                $rdo->id . '|' .
-                now()->toDateTimeString();
+        // Monta os dados para hash do conteúdo
+        // por enquanto fica aqui, mas o ideal é ter tabelas separadas
+        $conteudo = [
+            'id' => $rdo->id,
+            'numero_rdo' => $rdo->numero_rdo,
+            'data' => $rdo->data,
+            'dia_da_semana' => $rdo->dia_da_semana,
+            'obra_id' => $rdo->obra_id,
+            'manha' => $rdo->manha,
+            'tarde' => $rdo->tarde,
+            'noite' => $rdo->noite,
+            'condicao_area' => $rdo->condicao_area,
+            'acidente' => $rdo->acidente,
+            'status' => $rdo->status,
+            'created_at' => $rdo->created_at,
+            'update_at' => $rdo->update_at,
+        ];
+        $hashConteudo = hash('sha256', json_encode($conteudo));
 
+        // Monta os dados para hash de aprovação
+        $dadosGerente = $gerente->id . '|' .
+                        $gerente->cpf . '|' .
+                        $gerente->name . '|' .
+                        $gerente->email . '|' .
+                        $rdo->id . '|' .
+                        now()->toDateTimeString();
         // Gera o hash com SHA-256
-        $hash = hash('sha256', $dados);
+        $hashAprovacao = hash('sha256', $dadosGerente);
+
+        // Hash final
+        $hashFinal = hash('sha256', $hashConteudo . '|' . $hashAprovacao);
 
         // Atualiza o RDO
         $rdo->aprovado_por = $gerente->id;
         $rdo->aprovado_em = now();
-        $rdo->hash_aprovacao = $hash;
+        $rdo->hash_conteudo = $hashConteudo;
+        $rdo->hash_aprovacao = $hashAprovacao;
+        $rdo->hash_final = $hashFinal;
         $rdo->status = 'Aprovado';
         $rdo->save();
 
-        return response()->json([
-            'message' => 'RDO aprovado com sucesso!',
-            'hash_aprovacao' => $hash,
-            'aprovado_por' => $gerente->name,
-            'aprovado_em' => $rdo->aprovado_em->format('d/m/Y H:i')
-        ]);
+        // return response()->json([
+        //     'message' => 'RDO aprovado com sucesso!',
+        //     'hash_aprovacao' => $hash,
+        //     'aprovado_por' => $gerente->name,
+        //     'aprovado_em' => $rdo->aprovado_em->format('d/m/Y H:i')
+        // ]);
 
         return redirect()->route('rdos.index')->with('success', "RDO {$rdo->numero_rdo} aprovado com sucesso!");
 

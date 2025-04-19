@@ -103,6 +103,19 @@
                             </table>    
                         </div>
                     </div>
+                    <hr style="margin-top: 30px;">
+                        @if ($rdo->aprovado_por)
+                            <div style="font-size: 12px; margin-top: 10px;">
+                                <strong>Aprovado por:</strong> {{ $rdo_gerente->name }}<br>
+                                <strong>Data:</strong> {{ \Carbon\Carbon::parse($rdo->aprovado_em)->format('d/m/Y H:i') }}<br>
+                                <strong>Hash conteúdo:</strong><br>
+                                <code style="word-break: break-word;">{{ $rdo->hash_conteudo }}</code><br>
+                                <strong>Assinatura digital (hash):</strong><br>
+                                <code style="word-break: break-word;">{{ $rdo->hash_aprovacao }}</code><br>
+                                <strong>Hash final:</strong><br>
+                                <code style="word-break: break-word;">{{ $rdo->hash_final }}</code>
+                            </div>
+                        @endif
                 </div>
             </div>
         </div>
