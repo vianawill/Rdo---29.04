@@ -92,21 +92,41 @@
                                 </div>
 
                                 <div class="mt-4">
-                                    <a href="{{ route('rdos.index') }}" class="btn btn-sm btn-secondary"><i class="bi-backspace"></i> Voltar</a>
-                                    
-                                    <form action="{{ route('rdos.aprovar', $rdo->id) }}" method="POST" style="display:inline">
-                                        @csrf
+                                    <!-- Voltar -->
+                                    <a href="{{ route('rdos.index') }}" class="btn btn-sm btn-secondary">
+                                        <i class="bi-backspace"></i>Voltar</a>
+                                    @if ($rdo->status === 'Pendente')
+                                        <form action="{{ route('rdos.aprovar', $rdo->id) }}" method="POST" style="display: inline">
+                                            @csrf
+                                            <button class="btn-sm btn-success" type="submit">
+                                                <i class="bi bi-check-circle"></i> Aprovar 
+                                            </button>
+                                        </form>
+                                        @endif
                                         
-                                            @if ($rdo->status != 'Aprovado')
-                                                <button class="btn-sm btn-success" type="submit">
-                                                <i class="bi bi-check-circle"></i> Aprovar</button>
+                                        @if ($rdo->status === "Aprovado")
+                                            <a href="{{ route('rdos.pdf', $rdo->id) }}" 
+                                                class="btn btn-sm btn-secondary" target="_blank">
+                                                    <i class="bi-file-pdf"></i>Gerar PDF
+                                            </a>
+                                    
+                                            <form action="{{ route('rdos.assinarPdf', $rdo->id) }}" method="POST" style="display: inline">
+                                                @csrf
+                                                    <button type="submit" class="btn btn-sm btn-primary">
+                                                        <i class="bi bi-pen"></i>Enviar para assinatura
+                                                    </button>
+                                            </form>
+                                        @endif    
+                                            <!-- <button class="btn-sm btn-danger"><i class="bi bi-file-x"></i> Reprovar</button> -->
+                                
+                                            @if (session('link_assinatura'))
+                                                <div class="alert alert-success mt-3">
+                                                    Documento enviado para assinatura! <br>
+                                                    <a href="{{ session('link_assinatura') }}" target="_blank">Clique aqui para assinar</a>
+                                                </div>
                                             @endif
-                                    </form>
-                                    
-                                    <button class="btn-sm btn-danger"><i class="bi bi-file-x"></i> Reprovar</button>
-                                    
-                                    <a href="{{ route('rdos.pdf', $rdo->id) }}" class="btn btn-sm btn-secondary" target="_blank"><i class="bi-file-pdf"></i>Gerar PDF</a>
                                 </div>
+
                             </div>
                         </div>
                     </div>
