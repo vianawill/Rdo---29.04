@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use PhpParser\Node\Stmt\TryCatch;
 
 class RdoController extends Controller
 {
@@ -228,127 +229,230 @@ class RdoController extends Controller
 
     public function assinarPdf(Rdo $rdo)
     {
-        $pdfRelativePath = "documentos/RDO_{$rdo->id}.pdf";
-
-        // Log::info('$pdfRelativePath: ' . $pdfRelativePath);
-        // Log::info('Assinatura iniciada para RDO ID: ' . $rdo->id);
-
-        if (!Storage::disk('public')->exists($pdfRelativePath)) {
-            return back()->with('error', 'PDF não encontrado.');
-        }
-
-        // Log::info('->exists($pdfRelativePath): ' . $pdfRelativePath);
-
-        // Caminho completo pra enviar no corpo do POST
-        $pdfPath = storage_path("app/public/" . $pdfRelativePath);
-
-        // Log::info('Caminho completo PDF: ' . $pdfPath);
-        // Log::info('Arquivo existe fisicamente? ' . (file_exists($pdfPath) ? 'Sim' : 'Não'));
-
-        // dd([
-        //     'existe_laravel' => Storage::disk('public')->exists("documentos/RDO_{$rdo->id}.pdf"),
-        //     'caminho' => storage_path("app/public/documentos/RDO_{$rdo->id}.pdf"),
-        // ]);
-        $apiToken = 'd3085592-5bbb-4cee-bb23-fac71ea8fba3'; // ← cole aqui seu token
-        $signerName = 'Gabriel Jacobis';
-        $signerEmail = 'gabrieljacobis@gmail.com';
-
-        // 1. Criar signatário (gerente)
-        $signerResponse = Http::post("https://sandbox.clicksign.com/api/v1/signers?access_token=$apiToken", [
-            'signer' => [
-                'email' => $signerEmail,
-                'name' => $signerName,
-                'documentation' => '12345678909', // CPF fictício (pra testes)
-                'birthday' => '1980-01-01',
-                'phone_number' => '+5511999999999',
-                'auths' => ['email'], // pode ser ['email', 'sms', 'certificado']
-                'has_documentation' => true
-            ]
-        ]);
-
-        //Log::info('Signatário criado', $signerResponse->json());
-
-        // if (!$signerResponse->successful()) {
-        //     Log::error('Erro ao criar signatário', $signerResponse->json());
-        //     return back()->with('erro', 'Erro ao criar signatário.');
-        // }
-
-        $signerKey = $signerResponse['signer']['key'];
-
-        //Log::info('SignerKey: ', $signerKey->json());
-
-        // 2. Enviar documento
-        $file = file_get_contents($pdfPath);
+        $apiToken = 'f664e38b-6d8d-4419-af41-f4e9b8561558';
         
-        // if (!$file) { // adcionado para teste
-        //     Log::error('❌ Erro ao ler o arquivo PDF no caminho: ' . $pdfPath);
-        //     return back()->with('error', 'Erro ao ler o PDF para assinatura.');
-        // }
-
-        // $documentResponse = Http::post("https://sandbox.clicksign.com/api/v1/documents?access_token=$apiToken", [
-        $documentPayload = [ // substituído por
+        // 1. Enviar documento
+        $urlDocuments = 'https://app.clicksign.com/api/v1/documents?access_token=' . $apiToken;
+        $nomePdf = "RDO_{$rdo->id}.pdf";
+        $localPdf = storage_path('app/public/documentos/' . $nomePdf);
+        $pdf = file_get_contents($localPdf);
+        
+        $documentRequest = [
             'document' => [
-                'path' => "/RDO_{$rdo->id}_" . time() . '.pdf',
-                'content_base64' => 'data:application/pdf;base64,' . base64_encode($file),
+                'path' => "/RDO_{$rdo->id}.pdf",
+                'content_base64' => 'data:application/pdf;base64,' . base64_encode($pdf),
                 'name' => "RDO {$rdo->id}",
-                'content_type' => 'application/pdf',
                 'locale' => 'pt-BR',
+                'content_type' => 'pdf'
             ]
         ];
 
-        $apiUrl = "https://sandbox.clicksign.com/api/v1/documents?access_token=$apiToken";
+        // dd($documentRequest);
 
         $documentResponse = Http::withHeaders([
-            'Accept' => 'application/json',
             'Content-Type' => 'application/json',
-        ])->send('POST', $apiUrl, [
-            'body' => json_encode($documentPayload),
-        ]);
+            'Accept' => 'application/json',
+        ])->post($urlDocuments, $documentRequest);
 
-        //$responseJson = $documentResponse->json();
-
-        if (!$documentResponse->successful()) {
-            Log::error('Erro ao enviar documento', $documentResponse->json());
-            return back()->with('erro', 'Erro ao enviar documento.');
-        }
+        // dd('documentResponse', $documentResponse->json());
 
         $documentKey = $documentResponse['document']['key'];
 
-        Log::info('👉 Iniciando assinatura...');
+        // dd('documentKey', $documentKey);
+
+        // teste endereço para visualizar o documento dentro da clicksign
+        $urlVisualizarDocumento = 'https://app.clicksign.com/api/v1/documents/' . $documentKey . '?access_token=' . $apiToken;
+        
+        // 2. Criar signatário (gerente)
+        $signerName = 'Gabriel Jacobis';
+        $signerEmail = 'gabrieljacobis@gmail.com';
+        $urlSigners = 'https://app.clicksign.com/api/v1/signers?access_token=' . $apiToken;
+
+
+        $signerRequest = [
+            'signer' => [
+                'email' => $signerEmail,
+                'phone_number' => '+5511999999999',
+                'auths' => ['email'], // pode ser ['email', 'sms', 'certificado']
+                'name' => $signerName,
+                'documentation' => '12345678909', // CPF fictício (pra testes)
+                'birthday' => '1980-01-01',
+                'has_documentation' => true,
+            ]
+        ];
+
+        // dd('signerRequest', $signerRequest);
+        
+        $signerResponse = Http::withHeaders([
+            'Contet-Type' => 'application/json',
+            'Accept' => 'application/json',
+        ])->post($urlSigners, $signerRequest);
+
+        // dd('signerResponse', $signerResponse->json());
+
+        $signerKey = $signerResponse['signer']['key'];
+        
+        // dd('signerKey', $signerKey);
 
         // 3. Associar signatário ao documento
-        $signatureResponse = Http::post("https://sandbox.clicksign.com/api/v1/signatures?access_token=$apiToken", [
-            'signature' => [
+        $urlSignature = 'https://app.clicksign.com/api/v1/lists?access_token=' . $apiToken;
+
+        $signatureRequest = [
+            'list' => [
                 'document_key' => $documentKey,
                 'signer_key' => $signerKey,
-                'sign_as' => 'sign', // ou 'approve' se for só para aprovar
-                'sign_url' => true
+                'sign_as' => 'approve', // 'approve' se for só para aprovar
+                "message" => "Prezado gerente,\nPor favor assine o documento.\n\nQualquer dúvida estou à disposição.\n\nAtenciosamente,\nGabriel Jacobis"
+
             ]
-        ]);
+        ];
 
-        Log::info('📨 Resposta da assinatura (raw): ' . $signatureResponse->body());
-        Log::info('📨 Status code: ' . $signatureResponse->status());
+        $signatureResponse = Http::withHeaders([
+            'Contet-Type' => 'application/json',
+            'Accept' => 'application/json',
+        ])->post($urlSignature, $signatureRequest);
 
-        if (!$signatureResponse->successful()) {
-            return back()->with('erro', 'Erro ao vincular signatário.');
-        }
-        if ($signatureResponse->successful()) {
-            return back()->with('success', 'Signatário vinculado.');
-        }
+        // dd('signatureResponse', $signatureResponse->json());
 
-        // 4. Gerar link de assinatura
-        $signatureData = $signatureResponse->json();
-        $signUrl = $signatureData['signature']['url'] ?? null;
+        $request_signature_key = $signatureResponse['list']['request_signature_key'];
 
-        Log::info('$signUrl: ' . $signUrl);
+        // 4. Solicitar assinatura por email
+        $urlNotification = 'https://app.clicksign.com/api/v1/notifications?access_token=' . $apiToken;
 
-        dd($signatureResponse);
+        $notificationRequest = [
+            [
+                'request_signature_key' => $request_signature_key,
+                "message" => "Prezado gerente,\nPor favor assine o documento.\n\nQualquer dúvida estou à disposição.\n\nAtenciosamente,\nGabriel Jacobis",
+                'url' => $urlVisualizarDocumento
+            ]
+        ];
 
-        return redirect()->route('rdos.show', $rdo->id)
-                        ->with('success', 'Documento enviado para assinatura!')
-                        ->with('link_assinatura', $signUrl);
+        $notificationResponse = Http::withHeaders([
+            'Contet-Type' => 'application/json',
+            //'Accept' => 'application/json',
+        ])->post($urlNotification, $notificationRequest);
+
+        // dd('$notificationResponse', $notificationResponse->body());
+        // dd('$notificationRequest', $notificationRequest);
+
+        // dd($signatureResponse->body());
+
+        return back()->with('success', "RDO {$rdo->numero_rdo} enviado para assinatura!");
+                        // ->with('link_assinatura', $signUrl);
     }
-    
-    
 
+    // modo app
+    // public function assinarPdf(Rdo $rdo)
+    // {
+    //     $apiToken = 'd3085592-5bbb-4cee-bb23-fac71ea8fba3';
+        
+    //     // 1. Enviar documento
+    //     $urlDocuments = 'https://app.clicksign.com/api/v1/documents?access_token=' . $apiToken;
+    //     $nomePdf = "RDO_{$rdo->id}.pdf";
+    //     $localPdf = storage_path('app/public/documentos/' . $nomePdf);
+    //     $pdf = file_get_contents($localPdf);
+        
+    //     $documentRequest = [
+    //         'document' => [
+    //             'path' => "/RDO_{$rdo->id}.pdf",
+    //             'content_base64' => 'data:application/pdf;base64,' . base64_encode($pdf),
+    //             'name' => "RDO {$rdo->id}",
+    //             'locale' => 'pt-BR',
+    //             'content_type' => 'pdf'
+    //         ]
+    //     ];
+
+    //     // dd($documentRequest);
+
+    //     $documentResponse = Http::withHeaders([
+    //         'Content-Type' => 'application/json',
+    //         'Accept' => 'application/json',
+    //     ])->post($urlDocuments, $documentRequest);
+
+    //     // dd('documentResponse', $documentResponse->json());
+
+    //     $documentKey = $documentResponse['document']['key'];
+
+    //     // dd('documentKey', $documentKey);
+
+    //     // teste endereço para visualizar o documento dentro da clicksign
+    //     $urlVisualizarDocumento = 'https://app.clicksign.com/api/v1/documents/' . $documentKey . '?access_token=' . $apiToken;
+        
+    //     // 2. Criar signatário (gerente)
+    //     $signerName = 'Gabriel Jacobis';
+    //     $signerEmail = 'gabrieljacobis@gmail.com';
+    //     $urlSigners = 'https://app.clicksign.com/api/v1/signers?access_token=' . $apiToken;
+
+
+    //     $signerRequest = [
+    //         'signer' => [
+    //             'email' => $signerEmail,
+    //             'phone_number' => '+5511999999999',
+    //             'auths' => ['email'], // pode ser ['email', 'sms', 'certificado']
+    //             'name' => $signerName,
+    //             'documentation' => '12345678909', // CPF fictício (pra testes)
+    //             'birthday' => '1980-01-01',
+    //             'has_documentation' => true,
+    //         ]
+    //     ];
+
+    //     // dd('signerRequest', $signerRequest);
+        
+    //     $signerResponse = Http::withHeaders([
+    //         'Contet-Type' => 'application/json',
+    //         'Accept' => 'application/json',
+    //     ])->post($urlSigners, $signerRequest);
+
+    //     // dd('signerResponse', $signerResponse->json());
+
+    //     $signerKey = $signerResponse['signer']['key'];
+        
+    //     // dd('signerKey', $signerKey);
+
+    //     // 3. Associar signatário ao documento
+    //     $urlSignature = 'https://app.clicksign.com/api/v1/lists?access_token=' . $apiToken;
+
+    //     $signatureRequest = [
+    //         'list' => [
+    //             'document_key' => $documentKey,
+    //             'signer_key' => $signerKey,
+    //             'sign_as' => 'approve', // 'approve' se for só para aprovar
+    //             "message" => "Prezado gerente,\nPor favor assine o documento.\n\nQualquer dúvida estou à disposição.\n\nAtenciosamente,\nGabriel Jacobis"
+
+    //         ]
+    //     ];
+
+    //     $signatureResponse = Http::withHeaders([
+    //         'Contet-Type' => 'application/json',
+    //         'Accept' => 'application/json',
+    //     ])->post($urlSignature, $signatureRequest);
+
+    //     // dd('signatureResponse', $signatureResponse->json());
+
+    //     $request_signature_key = $signatureResponse['list']['request_signature_key'];
+
+    //     // 4. Solicitar assinatura por email
+    //     $urlNotification = 'https://app.clicksign.com/api/v1/notifications?access_token=' . $apiToken;
+
+    //     $notificationRequest = [
+    //         [
+    //             'request_signature_key' => $request_signature_key,
+    //             "message" => "Prezado gerente,\nPor favor assine o documento.\n\nQualquer dúvida estou à disposição.\n\nAtenciosamente,\nGabriel Jacobis",
+    //             'url' => $urlVisualizarDocumento
+    //         ]
+    //     ];
+
+    //     $notificationResponse = Http::withHeaders([
+    //         'Contet-Type' => 'application/json',
+    //         //'Accept' => 'application/json',
+    //     ])->post($urlNotification, $notificationRequest);
+
+    //     // dd('$notificationResponse', $notificationResponse->body());
+    //     // dd('$notificationRequest', $notificationRequest);
+
+    //     // dd($signatureResponse->body());
+
+    //     return back()->with('success', "RDO {$rdo->numero_rdo} enviado para assinatura!");
+    //                     // ->with('link_assinatura', $signUrl);
+    // }
 }
