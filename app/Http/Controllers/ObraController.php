@@ -64,7 +64,7 @@ class ObraController extends Controller
      */
     public function show(Obra $obra)
     {
-        //
+        return view('obras.show', compact('obra'));
     }
 
     /**
@@ -75,8 +75,9 @@ class ObraController extends Controller
      */
     public function edit(Obra $obra)
     {
-        //
+        return view('obras.edit', compact('obra'));
     }
+    
 
     /**
      * Update the specified resource in storage.

@@ -68,7 +68,7 @@ class EquipamentoController extends Controller
      */
     public function edit(Equipamento $equipamento)
     {
-        //
+        return view('equipamentos.edit', compact('equipamento'));
     }
 
     /**

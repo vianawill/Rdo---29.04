@@ -1,134 +1,317 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
+<!-- INICIO HEAD -->
+@auth
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- CSRF Token -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    <title>{{ config('app.name', 'RDO') }}</title>
-
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
-
-    <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-
-    <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <!-- Link para o Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link href="./output.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
 
 </head>
-<body>
-<style>
-    body {
-        font-family: Arial, sans-serif;
-    }
-</style>
-    <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-            <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    <h1>{{ config('app.name', 'RDO') }}</h1>
+<!-- FIM HEAD -->
+<header>
+<nav class="fixed text-2xl top-5 px-1 right-4 z-50 flex items-center space-x-3 lg:hidden">
+
+    <!-- Notificações -->
+    <div class="relative">
+        <i class="bi bi-bell-fill text-gray-200"></i>
+        <i class="bi bi-exclamation-circle-fill absolute text-base text-red-600 -top-1 -right-1"></i>
+    </div>
+
+    <!-- Perfil -->
+    <div class="relative group">
+        <i class="bi bi-person-circle px-1 text-gray-200 "></i>
+        <div class="absolute left-1/2 transform -translate-x-1/2 mt-1 bg-gray-800 text-white text-sm px-3 py-1 rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity">
+            {{ Auth::user()->name }}
+        </div>
+    </div>
+
+</nav>
+</header>
+<!-- INICIO BODY -->
+
+<body class="bg-fundo  font-[Poppins]">
+    @csrf
+<main>
+@yield('content')
+</main>
+    <!-- BOTAO OPEN SIDEBAR -->
+    <span class="fixed text-white text-3xl top-5 left-4 cursor-pointer rounded-2xl" onclick="Openbar()">
+        <i class="bi bi-filter-left px-1 bg-gray-900 rounded-2xl"></i>
+    </span>
+
+    <!-- SIDEBAR -->
+    <div id="sidebar" class="sidebar fixed top-0 bottom-0 lg:left-0 left-[-300px] duration-600 ease-in-out
+    p-4 w-[300px] overflow-y-auto text-center bg-fundo shadow-xl h-screen border-r-2 border-bdinput transform">
+
+        <!-- DIV SIDEBAR -->
+        <div class=" text-gray-100 text-xl">
+
+            <!-- HEADER SIDEBAR -->
+            <div class="header-sidebar p-2.5  flex items-center rounded-md ">
+
+                <!-- LOGO AlfaID -->
+                <a href="{{ route('home') }}">
+                    <img class="ml-2 w-20 h-19"
+                        src="/img/navbar/Vector.png" alt="logo-alfaid">
                 </a>
 
-                <!-- só aparece se logado -->
-                @auth
-                   <!-- <div class="container text-center"> -->
-                        <div class="button-container">
-                            <a href="{{ route('users.index') }}" 
-                                class="btn btn-primary">Usuários
-                            </a>
-                            <a href="{{ route('rdos.index') }}" 
-                                class="btn btn-primary">RDOs
-                            </a>
-                            <a href="{{ route('obras.index') }}" 
-                                class="btn btn-primary">Obras
-                            </a>
-                            <a href="{{ route('equipamentos.index') }}" 
-                                class="btn btn-primary">Equipamentos
-                            </a>
-                            <a href="{{ route('mao_obras.index') }}" 
-                                class="btn btn-primary">Mão de obra
-                            </a>
-                        </div>
-                    <!-- </div> -->
+                <!-- BOTAO CLOSE SIDEBAR -->
+                <i class="bi bi-x-lg ml-auto cursor-pointer lg:hidden hover:bg-red-600 rounded" onclick="Openbar()"></i>
 
-                    <button class="navbar-toggler" 
-                        type="button" data-bs-toggle="collapse" 
-                        data-bs-target="#navbarSupportedContent" 
-                        aria-controls="navbarSupportedContent" 
-                        aria-expanded="false" 
-                        aria-label="{{ __('Toggle navigation') }}">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                @endauth
-
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav me-auto"></ul>
-
-                    <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ms-auto">
-                        <!-- Authentication Links -->
-                        @guest
-                            @if (Route::has('login'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                                </li>
-                            @endif
-
-                            @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Cadastrar') }}</a>
-                                </li>
-                            @endif
-                        @else
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }}
-                                </a>
-
-                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </li>
-                        @endguest
-                    </ul>
-                </div>
             </div>
-        </nav>
+            <!-- FIM HEADER SIDEBAR -->
 
-        <main class="py-4">
-            @yield('content')
-        </main>
-    </div>
-    <!-- Scripts do Bootstrap -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+            <!-- DIVISORIA -->
+            <hr class="my-2 text-gray-700">
 
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+            <!-- CONTAINER SIDEBAR -->
+            <div class="button-container">
 
-        <!-- deu muitos problemas, tentar depois
-        <script>
-            $(document).ready(function() 
-                {
-                    $('input[name="cpf"]').mask('000.000.000-00', {reverse: true}); 
-                });
-        </script> -->
+                <!-- INPUT PESQUISAR -->
+                <div class="p-2.5 mt-3 flex items-center rounded-md 
+                px-4 duration-300 cursor-pointer  bg-bdinput">
+
+                    <!-- ICONE -->
+                    <i class="bi bi-search text-sm"></i>
+
+                    <input id="searchInput" class="text-[15px] ml-4 w-full bg-transparent focus:outline-none" placeholder="Pesquisar" />
+
+                </div>
+
+                <!-- RDO´s -->
+                <div class=" sidebar-item p-2.5 mt-2 flex items-center rounded-md px-4 duration-300 cursor-pointer  hover:bg-txtblue">
+
+                    <!-- ICONE -->
+                    <i class="bi bi-file-earmark-text-fill"></i>
+
+                    <div class="flex justify-between w-full items-center" onclick="dropDown()">
+
+                        <span class="text-[15px] ml-4 text-gray-200">
+                            RDO's
+                        </span>
+
+                        <!-- BOTAO SUBMENU -->
+                        <span class="text-sm transition-transform duration-300 rotate-180" id="arrow">
+                            <i class="bi bi-chevron-down"></i>
+                        </span>
+
+                    </div>
+
+                </div>
+
+                <!-- SUBMENU -->
+                <div class="leading-7 text-sm mt-2 w-4/5 mx-auto" id="submenu">
+
+                   
+
+                    <!-- SUBMENU MINHAS RDO's -->
+                    <a href="{{ route('rdos.index') }}" class="sidebar-item">
+
+                        <div class="flex items-center p-2.5 mt-2 rounded-md px-4 duration-300 cursor-pointer hover:bg-txtblue">
+
+                            <!-- ÍCONE -->
+                            <i class="bi bi-file-earmark-check text-lg mr-2"></i>
+
+                            <span>
+                                Meus RDO's
+                            </span>
+
+                        </div>
+
+                    </a>
+
+                    <!-- SUBMENU GERAR RDO -->
+                    <a href="{{ route('rdos.create') }}" class="sidebar-item">
+
+                        <div class="flex items-center p-2.5 mt-2 rounded-md px-4 duration-300 cursor-pointer hover:bg-txtblue">
+
+                            <!-- ÍCONE -->
+                            <i class="bi bi-file-earmark-plus text-lg mr-2"></i>
+
+                            <span>
+                                Gerar RDO
+                            </span>
+
+                        </div>
+
+                    </a>
+
+                </div>
+
+                <!-- OBRAS -->
+                <a href="{{ route('obras.index') }}" class="sidebar-item">
+
+                    <div class="p-2.5 mt-2 flex items-center rounded-md px-4 duration-300 cursor-pointer  hover:bg-txtblue">
+
+                        <!-- ICONE -->
+                        <i class="bi bi-cone-striped"></i>
+
+                        <span class="text-[15px] ml-4 text-gray-200">
+                            Obras
+                        </span>
+
+                    </div>
+
+                </a>
+
+                <!-- EQUIPAMENTOS -->
+                <a href="{{ route('equipamentos.index') }}" class="sidebar-item">
+
+                    <div class="p-2.5 mt-2 flex items-center rounded-md px-4 duration-300 cursor-pointer  hover:bg-txtblue">
+
+                        <!-- ICONE -->
+                        <i class="bi bi-tools"></i>
+
+                        <span class="text-[15px] ml-4 text-gray-200">
+                            Equipamentos
+                        </span>
+
+                    </div>
+
+                </a>
+
+                <!-- MAO DE OBRA -->
+                <a href="{{ route('mao_obras.index') }}" class="sidebar-item">
+
+                    <div class="p-2.5 mt-2 flex items-center rounded-md px-4 duration-300 cursor-pointer  hover:bg-txtblue">
+
+                        <!-- ICONE -->
+                        <i class="bi bi-wrench"></i>
+
+                        <span class="text-[15px] ml-4 text-gray-200">
+                            Mão de Obra
+                        </span>
+
+                    </div>
+
+                </a>
+
+                <!-- DIVISORIA -->
+                <hr class="my-4 text-gray-600">
+
+                <!-- NOTIFICAÇÕES -->
+                <a href="" class="sidebar-item">
+
+                    <div class="p-2.5 mt-2 flex items-center rounded-md px-4 duration-300 cursor-pointer  hover:bg-txtblue">
+
+                        <!-- ICONE -->
+                        <div class="relative">
+                            <i class="bi bi-bell-fill"></i>
+                            <i class="bi bi-exclamation-circle-fill absolute text-sm text-red-600 -top-1 -right-1"></i>
+                        </div>
+
+                        <span class="text-[15px] ml-4 text-gray-200">
+                            Notificações
+                        </span>
+
+                    </div>
+
+                </a>
+
+                <!-- USUÁRIOS -->
+                <a href="{{ route('users.index') }}" class="sidebar-item">
+
+                    <div class="p-2.5 mt-2 flex items-center rounded-md px-4 duration-300 cursor-pointer  hover:bg-txtblue">
+
+                        <!-- ICONE -->
+                        <i class="bi bi-people-fill"></i>
+
+                        <span class="text-[15px] ml-4 text-gray-200">
+                            Usuários
+                        </span>
+
+                    </div>
+
+                </a>
+
+                <!-- NOME DO USUARIO -->
+                <div class="absolute bottom-1 left-0 w-full p-4">
+
+                    <label class="perfil-label text-sm text-gray-200">
+
+                        <span class="font-bold text-txtblue">
+                            {{ Auth::user()->name }}
+                        </span>
+
+                    </label>
+
+                    <!-- LOGOUT -->
+                    <a href="{{ route('logout') }}">
+                        <div class="w-40 mx-auto p-1 mt-2 flex items-center justify-center rounded-2xl px-4 duration-300 cursor-pointer hover:bg-red-500"
+                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+
+                            <!-- ICONE -->
+                            <i class="bi bi-box-arrow-in-right"></i>
+
+                            <span class="text-[12px] ml-4 text-gray-200">
+                                Logout
+                            </span>
+
+                        </div>
+
+                    </a>
+
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                        @csrf
+                    </form>
+
+                </div>
+                <!-- FIM CONTAINER SIDEBAR -->
+
+            </div>
+            <!-- FIM DIV SIDEBAR -->
+
+        </div>
+        <!-- FIM SIDEBAR -->
+       
+        
 </body>
+@endauth
+<!-- FIM BODY -->
+
+<!-- SCRIPT -->
+<script>
+    // FUNÇÃO PARA ABRIR SUB MENU DO SIDEBAR
+    function dropDown() {
+        document.querySelector('#submenu').classList.toggle('hidden')
+        document.querySelector('#arrow').classList.toggle('rotate-180')
+    }
+    dropDown()
+
+    // FUNÇÃO PARA ABRIR E FECHAR O SIDEBAR
+    function Openbar() {
+        document.querySelector('.sidebar').classList.toggle('left-[-300px]')
+    }
+
+    // FUNCAO PARA A BARRA DE PESQUISA
+    document.getElementById("searchInput").addEventListener("input", function() {
+
+        let filter = this.value.toLowerCase(); // Obtém o valor digitado e transforma em minúsculas
+
+        let items = document.querySelectorAll(".sidebar-item"); // Seleciona todos os itens do menu
+
+        items.forEach(item => {
+
+            let text = item.textContent.toLowerCase(); // Obtém o texto do item
+
+            if (text.includes(filter)) {
+                item.style.display = ""; // Mostra o item se houver correspondência
+
+            } else {
+                item.style.display = "none"; // Esconde o item se não houver correspondência
+            }
+        });
+    });
+</script>
+<!-- FIM SCRIPT -->
+
 </html>

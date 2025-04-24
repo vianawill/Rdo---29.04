@@ -1,17 +1,55 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
-        <h2>Cadastrar Mão de Obra</h2>
 
-        <form action="{{ route('mao_obras.store') }}" method="POST">
-            @csrf
-            <div class="form-group">
-                <label for="funcao">Função do Trabalhador</label>
-                <input type="text" class="form-control w-50" id="funcao" name="funcao" required>
-            </div>
+<!-- INICIO MAIN -->
+<!-- CONTAINER -->
+<main class="container mx-auto p-4 lg:pl-[300px] mt-12 lg:mt-7 lg:max-w-6xl">
 
-            <button type="submit" class="btn btn-primary">Cadastrar Mão de Obra</button>
-        </form>
+    <div class="mt-7 grid grid-cols-1 gap-7 px-3 lg:px-0 w-full mx-auto">
+
+        <div class="bg-input shadow-blue-custom p-6 rounded-lg w-full h-full flex flex-col justify-between lg:max-w-3xl mx-auto">
+
+
+            <!--TEXTO CONTAINER-->
+            <section>
+
+                <p class="text-xl text-grey-600 pt-2 text-gray-100 font-semibold">
+                    Cadastrar Mão de Obra...
+                </p>
+
+            </section>
+
+            <!--SECTION FORM-->
+            <section class=" mt-10">
+                <form class="flex flex-col" method="POST" action="{{ route('mao_obras.store') }}">
+                    @csrf
+
+                    <!--INPUT FUNÇÃO DO TRABALHADOR -->
+                    <div class="form-group mb-6 pt-3 rounded bg-input">
+
+                        <label class="form-control block text-txtblue text-sm font-bold mb-2 ml-3">Função do Trabalhador</label>
+                        <input type="text" id="funcao"
+                            class="form-control bg-input rounded w-full text-white focus:outline-none border-b-4 border-bdinput border-300 focus:border-txtblue transition duration-500 px-3 pb-3"
+                            name="funcao"
+                            required>
+
+                    </div>
+
+
+                    <!--BOTÃO CADASTRAR-->
+                    <button class="btn btn-primary
+                    bg-txtblue hover:bg-blue-800 text-white font-bold py-2 rounded-lg shadow-lg hover:shadow-xl trasition duration-200"
+                        type="submit">
+                        Cadastrar
+                    </button>
+
+                </form>
+            </section>
+            <!--FIM SECTION FORM-->
+
+        </div>
     </div>
+</main>
+
 @endsection

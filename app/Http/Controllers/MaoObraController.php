@@ -68,7 +68,7 @@ class MaoObraController extends Controller
      */
     public function edit(MaoObra $maoObra)
     {
-        //
+        return view('mao_obras.edit', compact('maoObra'));
     }
 
     /**

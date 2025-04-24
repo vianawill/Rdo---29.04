@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
+
+    <link href="{{ asset('css/home.css') }}" rel="stylesheet">
+
 <div class="container">
     <h1 class="mb-4">Criar Usuário</h1>
 

@@ -2,59 +2,152 @@
 
 @section('content')
 
-    <div class="container">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1>Obras</h1>
-        <a href="{{ route('obras.create') }}" class="btn btn-primary">Cadastrar Obra</a>
-    </div>
+<!-- Adiciona isso para garantir que o scroll geral não atrapalhe no mobile -->
+<body class="overflow-hidden">
+    <div class="container mx-auto p-4 lg:pl-[300px] mt-10 lg:mt-7 lg:max-w-7xl">
 
-    @if (session('success'))
-        <div class="alert alert-success">{{ session('success') }}</div>
-    @endif
+        <!-- Boas-vindas -->
+        <div class="flex items-center justify-center space-x-3">
+            <i class="text-3xl bi bi-cone-striped text-gray-200"></i>
+            <h1 class="text-3xl font-bold text-gray-200">Obras</h1>
+        </div>
 
-    @if (session('error'))
-        <div class="alert alert-danger">{{ session('error') }}</div>
-    @endif
+        <!-- Barra de busca + botão -->
+        <div class="mt-6 button-container">
+            <div class="flex justify-between items-center px-9 py-2 gap-4 flex-wrap">
+                <!-- INPUT PESQUISAR -->
+                <div class="flex items-center bg-bdinput p-2.5 rounded-md w-full max-w-full sm:max-w-3xl flex-1">
+                    <i class="text-gray-100 bi bi-search text-sm"></i>
+                    <input id="searchInputtb"
+                        class="text-gray-200 text-[15px] ml-4 w-full bg-transparent focus:outline-none"
+                        placeholder="Pesquisar"
+                        onkeyup="filterTable()" />
 
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Nome</th>
-                <th>Empresa Contratada</th>
-                <th>Objeto do Contrato</th>
-                <th>Tempo Total do Contrato</th>
-                <th>Data Prevista Início</th>
-                <th>Data Real Início</th>
-                <th>Data Prevista Término</th>
-                <th>Data Real Término</th>
-                <th>Descrição</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($obras as $obra)
-                <tr>
-                    <td>{{ $obra->nome }}</td>
-                    <td>{{ $obra->empresa_contratada }}</td>
-                    <td>{{ $obra->objeto_contrato }}</td>
-                    <td>{{ $obra->tempo_total_contrato }}</td>
-                    <td>{{ $obra->data_prevista_inicio_obra }}</td>
-                    <td>{{ $obra->data_real_inicio_obra ?? 'N/A' }}</td>
-                    <td>{{ $obra->data_prevista_termino_obra }}</td>
-                    <td>{{ $obra->data_real_termino_obra ?? 'N/A' }}</td>
-                    <td>{{ $obra->descricao }}</td>
-                    
-                    @can('acoes-gerente')
-                        <td>
-                            <a href="{{ route('obras.edit', $obra) }}" class="btn btn-warning">Editar</a>
-                            <form action="{{ route('obras.destroy', $obra) }}" method="POST" style="display:inline;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger">Excluir</button>
-                            </form>
-                        </td>
-                    @endcan
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
+                    <script>
+                        function normalizeText(text) {
+                            return text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+                        }
+
+                        function filterTable() {
+                            const input = document.getElementById("searchInputtb");
+                            const filter = normalizeText(input.value);
+                            const table = document.querySelector("table tbody");
+                            const rows = table.getElementsByTagName("tr");
+
+                            for (let i = 0; i < rows.length; i++) {
+                                const cells = rows[i].getElementsByTagName("td");
+                                let match = false;
+
+                                for (let j = 0; j < cells.length; j++) {
+                                    const cellText = normalizeText(cells[j].textContent || cells[j].innerText);
+                                    if (cellText.indexOf(filter) > -1) {
+                                        match = true;
+                                        break;
+                                    }
+                                }
+
+                                rows[i].style.display = match ? "" : "none";
+                            }
+                        }
+                    </script>
+                </div>
+
+                <!-- BOTÃO NOVO RDO -->
+                <a href="/obras/create"
+                class="bg-txtblue/10 border border-txtblue text-txtblue px-4 py-2 rounded-lg shadow-lg text-md font-bold whitespace-nowrap
+                       flex items-center justify-center
+                       sm:px-6 sm:py-2 sm:text-md
+                       w-10 h-10 sm:w-auto sm:h-auto
+                       overflow-hidden transition-all duration-200
+                       hover:bg-txtblue hover:text-white">
+                    <i class="bi bi-plus-circle text-lg sm:mr-2"></i>
+                    <span class="hidden sm:inline">Nova Obra</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Grid com scroll apenas na lista -->
+        <div class="mt-7 grid grid-cols-1 gap-7 px-3 lg:px-0 w-full mx-auto">
+
+            <div class="bg-input shadow-blue-custom p-6 rounded-lg w-full h-full flex flex-col justify-between lg:max-w-[90rem] mx-auto">
+
+                <!-- Lista com altura reduzida e scroll próprio -->
+                <ul class="overflow-y-auto pr-2 -mr-2 scrollbar-hide max-h-[60vh] space-y-2 flex justify-center items-center">
+
+                    <table class="table table-striped text-sm lg:text-sm rounded-lg ">
+                        <thead>
+                            <tr class="bg-bdinput text-txtblue rounded-sm">
+                                <th class="text-center px-1 py-2">Nome</th>
+                                <th class="text-center px-1 py-2">Empresa Contratada</th>
+                                <th class="text-center px-1 py-2">Objeto do Contrato</th>
+                                <th class="text-center px-1 py-2 hidden lg:table-cell">Tempo Total do Contrato</th>
+                                <th class="text-center px-1 py-2 hidden lg:table-cell">Data Prevista Início</th>
+                                <th class="text-center px-1 py-2">Data Real Início</th>
+                                <th class="text-center px-1 py-2 hidden lg:table-cell">Data Prevista Término</th>
+                                <th class="text-center px-1 py-2 hidden lg:table-cell">Data Real Término</th>
+                                <th class="text-center px-1 py-2 hidden lg:table-cell">Descrição</th>
+                                <th class="px-4 py-2 lg:hidden"></th>
+                                @can('acoes-gerente')
+                                <th class="px-4 py-2 hidden lg:table-cell"></th>
+                                <th class="px-4 py-2 hidden lg:table-cell"></th>
+                                @endcan
+                                
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-bdinput">
+                            @foreach ($obras as $obra)
+                            <tr class="hover:bg-gray-700">
+                                <td class="text-gray-200 text-center px-1 py-2">{{ $obra->nome }}</td>
+                                <td class="text-gray-200 text-center px-1 py-2 ">{{ $obra->empresa_contratada }}</td>
+                                <td class="text-gray-200 text-center px-1 py-2">{{ $obra->objeto_contrato }}</td>
+                                <td class="text-gray-200 text-center px-1 py-2 hidden lg:table-cell">{{ $obra->tempo_total_contrato }}</td>
+                                <td class="text-gray-200 text-center px-1 py-2 hidden lg:table-cell">{{ $obra->data_prevista_inicio_obra }}</td>
+                                <td class="text-gray-200 text-center px-1 py-2">{{ $obra->data_real_inicio_obra ?? 'N/A' }}</td>
+                                <td class="text-gray-200 text-center px-1 py-2 hidden lg:table-cell">{{ $obra->data_prevista_termino_obra }}</td>
+                                <td class="text-gray-200 text-center px-1 py-2 hidden lg:table-cell">{{ $obra->data_real_termino_obra ?? 'N/A' }}</td>
+                                <td class="text-gray-200 text-center px-1 py-2 hidden lg:table-cell">{{ $obra->descricao }}</td>
+                               
+                                <td class="text-center px-4 py-2  lg:hidden">
+                                    <a href="{{ route('obras.show', $obra) }}"
+                                        class="text-txtblue text-4xl hover:text-white transition-all duration-200">
+                                        <i class="bi bi-arrow-up-right-circle"></i>
+                                    </a>
+                                </td>
+                                 @can('acoes-gerente')
+                                <td class="px-1 py-2 hidden lg:table-cell">
+                                    <a href="{{ route('obras.edit', $obra) }}" class="bg-edit/10 border border-edit text-edit px-3 py-1 rounded-md shadow-lg text-sm font-bold
+               flex items-center justify-center space-x-1 whitespace-nowrap
+               sm:px-4 sm:py-2 sm:rounded-lg sm:text-md
+               overflow-hidden transition-all duration-200
+               hover:bg-edit hover:text-white">
+                                        <i class="bi bi-pencil-square text-sm sm:text-md"></i>
+                                        <span class="font-bold">Editar</span>
+                                    </a>
+                                </td>
+
+                                <td class="px-1 py-2 hidden lg:table-cell">
+                                    <form action="{{ route('obras.destroy', $obra) }}" method="POST"
+                                        class="bg-reject/10 border border-reject text-reject px-3 py-1 rounded-md shadow-lg text-sm font-bold
+               flex items-center justify-center space-x-1 whitespace-nowrap
+               sm:px-4 sm:py-2 sm:rounded-lg sm:text-md
+               overflow-hidden transition-all duration-200
+               hover:bg-reject hover:text-white">
+                                        @csrf
+                                        @method('DELETE')
+                                        <i class="bi bi-x-circle-fill text-sm sm:text-md"></i>
+                                        <span class="font-bold">Excluir</span>
+                                    </form>
+                                </td>
+                                @endcan
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+
+                </ul>
+
+
+            </div>
+        </div>
+</body>
 @endsection
