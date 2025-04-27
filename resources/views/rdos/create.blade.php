@@ -249,7 +249,7 @@
                         </div>
                     </div>
 
-                    <!--INPUT MAO DE OBRA DIRETA UTILIZADA -->
+                    <!--INPUT MAO DE OBRA INDIRETA UTILIZADA -->
                     <div class="form-group row mb-6 pt-3 rounded bg-input">
                         <label for="maoObras" class="form-control inline-block text-txtblue text-md font-semibold mb-2 bg-fundo px-3 py-1 rounded-lg">Mão de Obra Indireta Utilizada</label>
                         <div class="relative max-h-60 overflow-y-auto scrollbar-hide">

@@ -17,31 +17,35 @@
 
 <!-- INICIO BODY -->
 
-<body class="body-bg pt-9 lg:pt-6 pb-1 px-2 md:px-0 overflow-hidden">
+<body class="body-bg pt-20 lg:pt-6 pb-1 px-2 md:px-0 overflow-hidden">
 
     <!-- INICIO HEADER -->
-    <header class=" container max-w-lg mx-auto">
+    <header class="container max-w-lg mx-auto">
 
         <!-- LOGO AlfaID -->
-        <img class=" mx-auto lg:w-21 lg:h-19 sm:w-18 sm:h-16"
+        <img class="mx-auto w-[240px] h-[128px] lg:w-[180px] lg:h-[78px] object-contain lg:pt-4"
             src="/img/navbar/Vector.png" alt="logo-alfaid">
 
-        <!-- TITULO -->
-        <h1 class=" mt-6 mb-0 sm:text-xl lg:text-2xl font-bold text-white text-center ">
+    </header>
+
+    <!-- TITULO -->
+    <div class="titulo pt-5 pb-8">
+
+        <h1 class="pt-6 text-[45px] lg:text-4xl font-bold text-white leading-tight whitespace-nowrap text-center">
             Registro Diario de Obra
         </h1>
+    </div>
 
-    </header>
     <!-- FIM HEADER -->
 
     <!-- INICIO MAIN -->
     <!-- CONTAINER -->
-    <main class="bg-secundario w-11/12 max-w-sm mx-auto p-6 md:w-full md:max-w-lg md:p-6 my-8 rounded-lg shadow-2xl ">
+    <main class="bg-secundario w-[900] h-[875] lg:w-[900] lg:h-[540] mx-auto p-10 lg:p-10 my-10 rounded-3xl shadow-2xl">
 
         <!--TEXTO CONTAINER-->
         <section>
-            <h3 class="font-bold text-2xl text-gray-100">Bem Vindo!</h3>
-            <p class=" text-grey-600 pt-2 text-gray-100"">Entre com seu cadastro...</p>
+            <h3 class="font-bold text-[50px] lg:text-2xl text-gray-100">Bem Vindo!</h3>
+            <p class="text-[35px] lg:text-xl text-grey-600 pt-2 text-gray-100"">Entre com seu cadastro...</p>
         </section>
 
         <!--SECTION FORM-->
@@ -50,11 +54,11 @@
                 @csrf
 
                 <!--INPUT CPF-->
-                <div class="mb-6 pt-3 rounded bg-input">
+                <div class="mb-6 pt-3 w-[800px] h-[180] lg:w-[780px] lg:h-[70] rounded-3xl lg:rounded-xl bg-input mx-auto">
 
-                    <label class="block text-txtblue text-sm font-bold mb-2 ml-3" for="cpf">CPF</label>
+                    <label class="block text-txtblue text-[35px] lg:text-[15px] lg:text-sm font-bold mb-2 ml-3" for="cpf">CPF</label>
                     <input type="text" id="cpf" class="form-control @error('cpf') is-invalid @enderror
-                     bg-input rounded w-full text-white focus:outline-none border-b-4 border-bdinput border-300 focus:border-txtblue transition duration-500 px-3 pb-3"
+                     bg-input rounded-2xl lg:rounded-xl w-full h-[127px] lg:h-[80] text-[40px] lg:text-[30px] text-white focus:outline-none border-b-8 border-bdinput border-300 focus:border-txtblue focus:border-b-[10px] transition duration-500 px-3 pb-3"
                         name="cpf"
                         maxlength="11"
                         value="{{ old('cpf') }}"
@@ -72,12 +76,15 @@
 
                 </div>
 
-                <!--INPUT SENHA-->
-                <div class="mb-6 pt-3 rounded bg-input">
+                <!-- Espaço entre os inputs -->
+                <div class="mb-6 lg:mb-[45px]"></div>
 
-                    <label class="block text-txtblue text-sm font-bold mb-2 ml-3" for="password">Senha</label>
+                <!--INPUT SENHA-->
+                <div class="mb-6 pt-3 w-[800px] h-[180] lg:w-[780px] lg:h-[70] rounded-3xl lg:rounded-xl bg-input mx-auto">
+
+                    <label class="block text-txtblue text-[35px] lg:text-[15px] font-bold mb-2 ml-3" for="password">Senha</label>
                     <input type="password" id="password" class="form-control @error('password') is-invalid @enderror
-                    bg-input rounded w-full text-white focus:outline-none border-b-4 border-bdinput focus:border-blue-600 transition duration-500 px-3 pb-3"
+                    bg-input rounded-2xl lg:rounded-xl w-full h-[127px] lg:h-[80] text-[40px] lg:text-[30px] text-white focus:outline-none border-b-8 border-bdinput border-300 focus:border-txtblue focus:border-b-[15px] transition duration-500 px-3 pb-3"
                         type="password"
                         name="password"
                         required
@@ -93,23 +100,24 @@
                 </div>
 
                 <!--ESQUECEU A SENHA-->
-                
-                <div class="flex justify-end">
-                @if (Route::has('password.request'))
-                    <a href="{{ route('password.request') }}" class="btn btn-link text-sm text-txtblue hover:text-blue-800 hover:underline mb-6">
+
+                <div class="flex justify-end pt-4 lg:pt-10">
+                    @if (Route::has('password.request'))
+                    <a href="{{ route('password.request') }}" class="btn btn-link  text-[25px] lg:text-[17px] text-txtblue hover:text-blue-800 hover:underline">
                         Esqueceu sua senha?
                     </a>
                     @endif
                 </div>
 
                 <!--BOTÃO LOGIN-->
-                <button class="btn btn-primary
-                bg-txtblue hover:bg-blue-800 text-white font-bold py-2 rounded-lg shadow-lg hover:shadow-xl trasition duration-200"
-                    type="submit">
-                    {{ __('Login') }}
-                </button>
+                <div class="pt-6 mx-auto">
+                    <button class="btn btn-primary
+                 w-[480px] h-[100px] lg:h-[50] lg:w-[400] bg-txtblue hover:bg-blue-800 text-[35px] lg:text-sm text-white font-bold py-2 rounded-2xl shadow-lg hover:shadow-xl trasition duration-200 mx-auto"
+                        type="submit">
+                        {{ __('Login') }}
+                    </button>
+                </div>
 
-            
         </section>
         </form><!--FIM SECTION FORM-->
 
@@ -118,8 +126,8 @@
     <!-- FIM MAIN -->
 
     <!-- LINK CADASTRE-SE -->
-    <div class="max-w-lg mx-auto text-center mt-8 mb-4">
-        <p class="text-xs text-gray-400 ">Não tem uma conta? <a href="{{ route('register') }}" class="text-txtblue hover:text-blue-800">Cadastre-se</a>.</p>
+    <div class="max-w-lg mx-auto text-center mt-8 mb-2">
+        <p class="lg:text-sm text-[32px] text-gray-400 ">Não tem uma conta? <a href="{{ route('register') }}" class="text-txtblue hover:text-blue-800">Cadastre-se</a>.</p>
     </div>
 
     <!-- INICIO FOOTER -->
@@ -127,7 +135,7 @@
 
         <!--LINK CONTATO-->
         <a href=""
-            class="text-xs">
+            class="lg:text-sm text-[30px]">
             Contato
         </a>
 

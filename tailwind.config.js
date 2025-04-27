@@ -7,6 +7,9 @@ export default {
     "./resources/**/*.js",
     "./resources/**/*.vue",
   ],
+  safelist: [
+    'w-3', 'h-3', 'bg-green-500', 'bg-orange-500', 'bg-gray-500', 'rounded-full',
+  ],
   theme: {
     extend: {
         boxShadow:{

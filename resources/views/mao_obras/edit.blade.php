@@ -16,7 +16,7 @@
                             @method('PUT')
 
                             <div class="flex flex-wrap justify-center -mx-2 px-4 p-4">
-                                <div class="w-1/2 sm:w-1/3 px-2 mb-4">
+                                <div class="w-full765 px-2 mb-4">
                                     <label class=" text-txtblue text-sm font-bold mb-2 ml-3" for="funcao">Função:</label>
                                     <input class=" bg-input rounded w-full text-white focus:outline-none border-b-4 border-bdinput border-300 focus:border-txtblue transition duration-500 px-3 pb-3"
                                         type="text"

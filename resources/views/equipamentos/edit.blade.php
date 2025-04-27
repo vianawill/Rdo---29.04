@@ -15,8 +15,8 @@
                             @csrf
                             @method('PUT')
 
-                            <div class="flex flex-wrap justify-between -mx-2 px-4 p-4">
-                                <div class="w-1/2 sm:w-1/3 px-2 mb-4">
+                            <div class="flex flex-wrap -mx-2 px-4 p-4">
+                                <div class="w-full px-2 mb-4">
                                     <label class=" text-txtblue text-sm font-bold mb-2 ml-3" for="nome">Função:</label>
                                     <input class=" bg-input rounded w-full text-white focus:outline-none border-b-4 border-bdinput border-300 focus:border-txtblue transition duration-500 px-3 pb-3"
                                         type="text"
@@ -26,8 +26,8 @@
                                         required>
                             </div>
 
-                            <div class="flex flex-wrap justify-between -mx-2 px-4 p-4">
-                                <div class="w-1/2 sm:w-2/3 px-2 mb-4">
+                            <div class="flex flex-wrap -mx-2 px-4 p-4">
+                                <div class="w-full px-2 mb-4">
                                     <label class=" text-txtblue text-sm font-bold mb-2 ml-3" for="tipo">Tipo:</label>
                                     <input class=" bg-input rounded w-full text-white focus:outline-none border-b-4 border-bdinput border-300 focus:border-txtblue transition duration-500 px-3 pb-3"
                                         type="text"

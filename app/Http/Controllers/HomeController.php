@@ -25,9 +25,14 @@ class HomeController extends Controller
     public function index()
 {
     // Busque os RDOs do banco de dados
-    $rdos = Rdo::latest()->take(3)->get(); // Ajuste a lógica conforme necessário
+    // Busque os RDOs pendentes
+    $rdosPendentes = Rdo::where('status', 'pendente')->latest()->take(3)->get();
 
-    // Retorne a view com a variável $rdos
-    return view('home', compact('rdos'));
+    // Busque os últimos RDOs aprovados
+    $rdosAprovados = Rdo::where('status', 'aprovado')->latest()->take(4)->get();
+
+    // Retorne a view com as variáveis $rdosPendentes e $rdosAprovados
+    return view('home', compact('rdosPendentes', 'rdosAprovados'));
+    
 }
 }

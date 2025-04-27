@@ -5,7 +5,7 @@
 
 <div class="container mx-auto p-4 lg:pl-[300px] mt-10 lg:mt-10 lg:max-w-6xl">
     <div class="mt-4 grid grid-cols-1 gap-7 px-3 lg:px-0 w-full mx-auto">
-        <div class="bg-input shadow-blue-custom p-6 rounded-lg w-full h-full flex flex-col justify-between lg:max-w-3xl mx-auto">
+        <div class="bg-input shadow-blue-custom p-6 rounded-lg w-full h-full flex flex-col lg:max-w-3xl mx-auto">
             <div class="card shadow-lg rounded">
 
                 <form action="{{ route('obras.update', $obra) }}" method="POST">
@@ -16,8 +16,8 @@
                             @csrf
                             @method('PUT')
 
-                            <div class="flex flex-wrap justify-between -mx-2 px-4 p-4">
-                                <div class="w-1/2 sm:w-1/3 px-2 mb-4">
+                            <div class="flex flex-wrap  -mx-2 px-4 p-4">
+                                <div class="w-full px-2 mb-4">
                                     <label class=" text-txtblue text-sm font-bold mb-2 ml-3" for="nome">Nome da Obra:</label>
                                     <input class=" bg-input rounded w-full text-white focus:outline-none border-b-4 border-bdinput border-300 focus:border-txtblue transition duration-500 px-3 pb-3"
                                         type="text"
@@ -26,7 +26,7 @@
                                         value="{{ $obra->nome }}"
                                         required>
                                 </div>
-                                <div class="w-1/2 sm:w-1/3 px-1 mb-4">
+                                <div class="w-full px-1 mb-4">
                                     <label class=" text-txtblue text-sm font-bold mb-2 ml-3" for="empresa_contratada">Empresa Contratada:</label>
                                     <input class=" bg-input rounded w-full text-white focus:outline-none border-b-4 border-bdinput border-300 focus:border-txtblue transition duration-500 px-3 pb-3"
                                         type="text"
@@ -35,7 +35,7 @@
                                         value="{{ $obra->empresa_contratada }}"
                                         required>
                                 </div>
-                                <div class="w-full sm:w-1/3 px-2">
+                                <div class="w-full px-2">
                                     <label class=" text-txtblue text-sm font-bold mb-2 ml-3" for="objeto_contrato">Objeto do Contrato:</label>
                                     <input class=" bg-input rounded w-full text-white focus:outline-none border-b-4 border-bdinput border-300 focus:border-txtblue transition duration-500 px-3 pb-3"
                                         type="text"
@@ -46,8 +46,8 @@
                                 </div>
                             </div>
 
-                            <div class="flex flex-wrap justify-between -mx-2 px-4 p-4">
-                                <div class="w-1/2 sm:w-1/3 px-2 mb-4">
+                            <div class="flex flex-wrap -mx-2 px-4 p-4">
+                                <div class="w-full px-2 mb-4">
                                     <label class=" text-txtblue text-xs font-bold mb-2 ml-3" for="tempo_total_contrato">Tempo Total do Contrato:</label>
                                     <input class=" bg-input rounded w-full text-white focus:outline-none border-b-4 border-bdinput border-300 focus:border-txtblue transition duration-500 px-3 pb-3"
                                         type="text"
@@ -56,7 +56,7 @@
                                         value="{{ $obra->tempo_total_contrato }}"
                                         required>
                                 </div>
-                                <div class="w-1/2 sm:w-1/3 px-2 mb-4">
+                                <div class="w-full px-2 mb-4">
                                     <label class=" text-txtblue text-xs font-bold mb-2 ml-3" for="data_prevista_inicio_obra">Data Prevista de Início:</label>
                                     <input class=" bg-input rounded w-full text-white focus:outline-none border-b-4 border-bdinput border-300 focus:border-txtblue transition duration-500 px-3 pb-3"
                                         type="date"
@@ -65,7 +65,7 @@
                                         value="{{ $obra->data_prevista_inicio_obra }}"
                                         required>
                                 </div>
-                                <div class="w-1/2 sm:w-1/3 px-2 mb-4">
+                                <div class="w-full px-2 mb-4">
                                     <label class=" text-txtblue text-xs font-bold mb-2 ml-3" for="data_real_inicio_obra">Data Real de Início:</label>
                                     <input class=" bg-input rounded w-full text-white focus:outline-none border-b-4 border-bdinput border-300 focus:border-txtblue transition duration-500 px-3 pb-3"
                                         type="date"
@@ -74,7 +74,7 @@
                                         value="{{ $obra->data_real_inicio_obra }}"
                                         required>
                                 </div>
-                                <div class="w-1/2 sm:w-1/3 px-2 mb-4">
+                                <div class="w-full px-2 mb-4">
                                     <label class=" text-txtblue text-xs font-bold mb-2 ml-3" for="data_prevista_termino_obra">Data Prevista de Término:</label>
                                     <input class=" bg-input rounded w-full text-white focus:outline-none border-b-4 border-bdinput border-300 focus:border-txtblue transition duration-500 px-3 pb-3"
                                         type="date"
@@ -83,7 +83,7 @@
                                         value="{{ $obra->data_prevista_termino_obra }}"
                                         required>
                                 </div>
-                                <div class="w-1/2 sm:w-1/3 px-2 mb-4">
+                                <div class="w-full px-2 mb-4">
                                     <label class=" text-txtblue text-xs font-bold mb-2 ml-3" for="data_real_termino_obra">Data Real de Término:</label>
                                     <input class=" bg-input rounded w-full text-white focus:outline-none border-b-4 border-bdinput border-300 focus:border-txtblue transition duration-500 px-3 pb-3"
                                         type="date"
@@ -94,8 +94,8 @@
                                 </div>
                             </div>
 
-                            <div class="flex flex-wrap justify-between -mx-2 px-4 p-4">
-                                <div class="w-full  px-2 mb-4">
+                            <div class="flex flex-wrap -mx-2 px-4 p-4">
+                                <div class="w-full px-2 mb-4">
                                     <label class=" text-txtblue text-sm font-bold mb-2 ml-3" for="descricao">Descrição:</label>
                                     <textarea  class=" bg-input rounded w-full text-white focus:outline-none border-b-4 border-bdinput border-300 focus:border-txtblue transition duration-500 px-3 pb-3"
                                         id="descricao"
@@ -115,7 +115,7 @@
 </div>
 </div>
 
-<div class=" fixed bottom-8 left-1/2 transform -translate-x-1/2 lg:left-[calc(298px+40%)] lg:-translate-x-1/2 flex justify-center space-x-2 sm:space-x-5">
+<div class=" fixed bottom-1 left-1/2 transform -translate-x-1/2 lg:left-[calc(298px+40%)] lg:-translate-x-1/2 flex justify-center space-x-2 sm:space-x-5">
 
     <a href="{{ route('obras.index') }}"
         class="bg-txtblue/10 border border-txtblue text-txtblue px-3 py-1 rounded-md shadow-lg text-sm font-bold

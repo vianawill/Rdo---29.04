@@ -23,10 +23,7 @@ class RdoController extends Controller
      */
     public function index()
     {
-        $rdos = Rdo::all();
-        $rdos = Rdo::with('obras')->get(); // Recupera todos os RDos com obras associadas
-        $rdos = Rdo::with('equipamentos')->get(); // Recupera todos os RDos com equipamentos associados
-        $rdos = Rdo::with('maoObras')->get(); // Recupera todos os RDos com mão de obras associadas
+        $rdos = Rdo::with(['obras', 'equipamentos', 'maoObras'])->get();
 
         return view('rdos.index', compact('rdos'));
     }

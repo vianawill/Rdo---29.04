@@ -79,7 +79,7 @@
                                 <th class="text-center px-1 py-2">CPF</th>
                                 <th class="text-center px-1 py-2 hidden lg:table-cell">Email</th>
                                 <th class="text-center px-1 py-2">Acesso</th>
-                                <th class="px-4 py-2 lg:hidden""></th>
+                                
                                 @can('acoes-gerente')
                                 <th class="px-4 py-2 hidden lg:table-cell"></th>
                                 <th class="px-4 py-2 hidden lg:table-cell"></th>
@@ -89,18 +89,11 @@
                         </thead>
                         <tbody class="divide-y divide-bdinput">
                             @foreach ($users as $user)
-                            <tr class="hover:bg-gray-700">
+                            <tr class="hover:bg-gray-700 cursor-pointer" onclick="window.location='{{ route('users.show', $user) }}'">
                                 <td class="text-gray-200 text-center px-1 py-2">{{ $user->name }}</td>
                                 <td class="text-gray-200 text-center px-1 py-2">{{ $user->cpf }}</td>
                                 <td class="text-gray-200 text-center px-1 py-2 hidden lg:table-cell">{{ $user->email }}</td>
                                 <td class="text-gray-200 text-center px-1 py-2">{{ $user->tipo }}</td>
-                                <td class="text-center px-4 py-2 lg:hidden"">
-                                    <a href="{{ route('users.show', $user) }}"
-                                        class="text-txtblue text-4xl hover:text-white transition-all duration-200">
-                                        <i class="bi bi-arrow-up-right-circle"></i>
-                                    </a>
-                                </td>
-
                                 @can('acoes-gerente')
                                 <td class="px-1 py-2 hidden lg:table-cell"">
                                     <a href="{{ route('users.edit', $user) }}" class="bg-edit/10 border border-edit text-edit px-3 py-1 rounded-md shadow-lg text-sm font-bold

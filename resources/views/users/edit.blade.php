@@ -4,7 +4,7 @@
 
 <div class="container mx-auto p-4 lg:pl-[300px] mt-10 lg:mt-20 lg:max-w-6xl">
     <div class="mt-4 grid grid-cols-1 gap-7 px-3 lg:px-0 w-full mx-auto">
-        <div class="bg-input shadow-blue-custom p-6 rounded-lg w-full h-full flex flex-col justify-between lg:max-w-3xl mx-auto">
+        <div class="bg-input shadow-blue-custom p-6 rounded-lg w-full h-full flex flex-col lg:max-w-3xl mx-auto">
             <div class="card shadow-lg rounded">
                 <form action="{{ route('users.update', $user) }}" method="POST">
 
@@ -16,8 +16,8 @@
                             @csrf
                             @method('PUT')
 
-                            <div class="flex flex-wrap justify-between -mx-2 px-4 p-4">
-                                <div class="w-1/2 sm:w-1/3 px-2 mb-4">
+                            <div class="flex flex-wrap -mx-2 px-4 p-4">
+                                <div class="w-full px-2 mb-4">
                                     <label class=" text-txtblue text-sm font-bold mb-2 ml-3" for="name">Nome</label>
                                     <input class=" bg-input rounded w-full text-white focus:outline-none border-b-4 border-bdinput border-300 focus:border-txtblue transition duration-500 px-3 pb-3"
                                         type="text"
@@ -25,7 +25,7 @@
                                         value="{{ $user->name }}"
                                         required>
                                 </div>
-                                <div class="w-1/2 sm:w-1/3 px-1 mb-4">
+                                <div class="w-full px-1 mb-4">
                                     <label class=" text-txtblue text-sm font-bold mb-2 ml-3" for="cpf">CPF</label>
                                     <input class=" bg-input rounded w-full text-white focus:outline-none border-b-4 border-bdinput border-300 focus:border-txtblue transition duration-500 px-3 pb-3"
                                         type="text"
@@ -33,7 +33,7 @@
                                         value="{{ $user->cpf }}"
                                         required>
                                 </div>
-                                <div class="w-full sm:w-1/3 px-2">
+                                <div class="w-full px-2 mb-4">
                                     <label class=" text-txtblue text-sm font-bold mb-2 ml-3" for="email">Email</label>
                                     <input class=" bg-input rounded w-full text-white focus:outline-none border-b-4 border-bdinput border-300 focus:border-txtblue transition duration-500 px-3 pb-3"
                                         type="email"
@@ -41,7 +41,7 @@
                                         value="{{ $user->email }}"
                                         required>
                                 </div>
-                                <div class="w-full sm:w-full px-2">
+                                <div class="w-full px-2 mb-4">
                                     <label class=" text-txtblue text-sm font-bold mb-2 ml-3" for="password">Senha</label>
                                     <input class=" bg-input rounded w-full text-white focus:outline-none border-b-4 border-bdinput border-300 focus:border-txtblue transition duration-500 px-3 pb-3"
                                         type="password"

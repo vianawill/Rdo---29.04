@@ -69,12 +69,12 @@
         <!-- Grid com scroll apenas na lista -->
         <div class="mt-7 grid grid-cols-1 gap-7 px-3 lg:px-0 w-full mx-auto">
 
-            <div class="bg-input shadow-blue-custom p-6 rounded-lg w-full h-full flex flex-col justify-between lg:max-w-[90rem] mx-auto">
+            <div class="bg-input shadow-blue-custom p-6 rounded-lg w-full h-full flex flex-col justify-between lg:w-[900px] mx-auto"">
 
                 <!-- Lista com altura reduzida e scroll próprio -->
                 <ul class="overflow-y-auto pr-2 -mr-2 scrollbar-hide max-h-[60vh] space-y-2 flex justify-center items-center">
 
-                    <table class="table table-striped text-sm lg:text-sm rounded-lg ">
+                    <table class="table table-striped text-xs lg:text-sm rounded-lg ">
                         <thead>
                             <tr class="bg-bdinput text-txtblue rounded-sm">
                                 <th class="text-center px-1 py-2">Nome</th>
@@ -86,7 +86,6 @@
                                 <th class="text-center px-1 py-2 hidden lg:table-cell">Data Prevista Término</th>
                                 <th class="text-center px-1 py-2 hidden lg:table-cell">Data Real Término</th>
                                 <th class="text-center px-1 py-2 hidden lg:table-cell">Descrição</th>
-                                <th class="px-4 py-2 lg:hidden"></th>
                                 @can('acoes-gerente')
                                 <th class="px-4 py-2 hidden lg:table-cell"></th>
                                 <th class="px-4 py-2 hidden lg:table-cell"></th>
@@ -96,23 +95,16 @@
                         </thead>
                         <tbody class="divide-y divide-bdinput">
                             @foreach ($obras as $obra)
-                            <tr class="hover:bg-gray-700">
+                            <tr class="hover:bg-gray-700 cursor-pointer" onclick="window.location='{{ route('obras.show', $obra) }}'">
                                 <td class="text-gray-200 text-center px-1 py-2">{{ $obra->nome }}</td>
                                 <td class="text-gray-200 text-center px-1 py-2 ">{{ $obra->empresa_contratada }}</td>
                                 <td class="text-gray-200 text-center px-1 py-2">{{ $obra->objeto_contrato }}</td>
                                 <td class="text-gray-200 text-center px-1 py-2 hidden lg:table-cell">{{ $obra->tempo_total_contrato }}</td>
-                                <td class="text-gray-200 text-center px-1 py-2 hidden lg:table-cell">{{ $obra->data_prevista_inicio_obra }}</td>
-                                <td class="text-gray-200 text-center px-1 py-2">{{ $obra->data_real_inicio_obra ?? 'N/A' }}</td>
-                                <td class="text-gray-200 text-center px-1 py-2 hidden lg:table-cell">{{ $obra->data_prevista_termino_obra }}</td>
-                                <td class="text-gray-200 text-center px-1 py-2 hidden lg:table-cell">{{ $obra->data_real_termino_obra ?? 'N/A' }}</td>
+                                <td class="text-gray-200 text-center px-1 py-2 hidden lg:table-cell">{{ $obra->data_prevista_inicio_obra ? \Carbon\Carbon::parse($obra->data_prevista_inicio_obra)->format('d/m/Y') : 'N/A' }}</td>
+                                <td class="text-gray-200 text-center px-1 py-2">{{ $obra->data_real_inicio_obra ? \Carbon\Carbon::parse($obra->data_real_inicio_obra)->format('d/m/Y') : 'N/A' }}</td>
+                                <td class="text-gray-200 text-center px-1 py-2 hidden lg:table-cell">{{ $obra->data_prevista_termino_obra ? \Carbon\Carbon::parse($obra->data_prevista_termino_obra)->format('d/m/Y') : 'N/A' }}</td>
+                                <td class="text-gray-200 text-center px-1 py-2 hidden lg:table-cell">{{ $obra->data_real_termino_obra ? \Carbon\Carbon::parse($obra->data_real_termino_obra)->format('d/m/Y') : 'N/A' }}</td>
                                 <td class="text-gray-200 text-center px-1 py-2 hidden lg:table-cell">{{ $obra->descricao }}</td>
-                               
-                                <td class="text-center px-4 py-2  lg:hidden">
-                                    <a href="{{ route('obras.show', $obra) }}"
-                                        class="text-txtblue text-4xl hover:text-white transition-all duration-200">
-                                        <i class="bi bi-arrow-up-right-circle"></i>
-                                    </a>
-                                </td>
                                  @can('acoes-gerente')
                                 <td class="px-1 py-2 hidden lg:table-cell">
                                     <a href="{{ route('obras.edit', $obra) }}" class="bg-edit/10 border border-edit text-edit px-3 py-1 rounded-md shadow-lg text-sm font-bold
@@ -120,8 +112,8 @@
                sm:px-4 sm:py-2 sm:rounded-lg sm:text-md
                overflow-hidden transition-all duration-200
                hover:bg-edit hover:text-white">
-                                        <i class="bi bi-pencil-square text-sm sm:text-md"></i>
-                                        <span class="font-bold">Editar</span>
+                                        <i class="bi bi-pencil-square text-lg hover:"></i>
+                                        
                                     </a>
                                 </td>
 
@@ -134,8 +126,8 @@
                hover:bg-reject hover:text-white">
                                         @csrf
                                         @method('DELETE')
-                                        <i class="bi bi-x-circle-fill text-sm sm:text-md"></i>
-                                        <span class="font-bold">Excluir</span>
+                                        <i class="bi bi-x-circle-fill text-lg"></i>
+                                        
                                     </form>
                                 </td>
                                 @endcan

@@ -5,7 +5,7 @@
 <!-- Adiciona isso para garantir que o scroll geral não atrapalhe no mobile -->
 
 <body class="overflow-hidden">
-    <div class="container mx-auto p-4 lg:pl-[300px] mt-10 lg:mt-7 lg:max-w-6xl">
+    <div class="container mx-auto p-4 lg:pl-[300px] mt-6 lg:mt-20 lg:max-w-6xl">
 
         <!-- Boas-vindas -->
         <div class="flex items-center justify-center space-x-3">
@@ -52,11 +52,9 @@
                                 rows[i].style.display = match ? '' : 'none';
                             }
                         }
-
-                      
                     </script>
                 </div>
-                
+
                 <!-- BOTÃO PENDENTES -->
                 @can('acoes-gerente')
                 <button onclick="toggleFilter(this)"
@@ -117,12 +115,12 @@
         <!-- Grid com scroll apenas na lista -->
         <div class="mt-7 grid grid-cols-1 gap-7 px-3 lg:px-0 w-full mx-auto">
 
-            <div class="bg-input shadow-blue-custom p-6 rounded-lg w-full h-full flex flex-col justify-between lg:max-w-3xl mx-auto">
+            <div class="bg-input shadow-blue-custom p-6 rounded-lg w-full h-full flex flex-col justify-between lg:w-[900px] mx-auto">
 
                 <!-- Lista com altura reduzida e scroll próprio -->
                 <ul class="overflow-y-auto pr-2 -mr-2 scrollbar-hide max-h-[60vh] space-y-2">
 
-                <table class="table table-striped text-sm lg:text-md rounded-lg overflow-hidden">
+                    <table class="table table-striped text-xs lg:text-lg rounded-lg overflow-hidden">
                         <thead>
                             <tr class="bg-bdinput text-txtblue rounded-sm">
                                 <th class="text-center px-4 py-2 hidden lg:table-cell">RDO</th>
@@ -131,19 +129,19 @@
                                 <th class="text-center px-4 py-2 hidden lg:table-cell">Empresa Contratada</th>
                                 <th class="text-center px-4 py-2 ">Objeto do Contrato</th> <!-- Esconde no mobile -->
                                 <th class="text-center px-4 py-2 hidden lg:table-cell">Status</th> <!-- Esconde no mobile -->
-                                <th class="px-4 py-2"></th>
+                                <th class="px-4 py-2 hidden lg:table-cell"></th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-bdinput">
                             @foreach ($rdos as $rdo)
-                            <tr class="hover:bg-gray-700">
+                            <tr class="hover:bg-gray-700 cursor-pointer" onclick="window.location='{{ route('rdos.show', $rdo) }}'">
                                 <td class="text-gray-200 text-center px-4 py-2 hidden lg:table-cell">{{ $rdo->numero_rdo }}</td>
                                 <td class="text-gray-200 text-center px-4 py-2">{{ \Carbon\Carbon::parse($rdo->data)->format('d/m/Y') }}</td>
-                                <td class="text-gray-200 text-center px-4 py-2 ">{{ $rdo->obras->nome }}</td> <!-- Esconde no mobile -->
-                                <td class="text-gray-200 text-center px-4 py-2 hidden lg:table-cell">{{ $rdo->obras->empresa_contratada }}</td>
-                                <td class="text-gray-200 text-center px-4 py-2 ">{{ $rdo->obras->objeto_contrato }}</td> <!-- Esconde no mobile -->
-                                <td class="text-gray-200 text-center px-4 py-2 hidden lg:table-cell">{{ $rdo->status }}</td> <!-- Esconde no mobile -->
-                                <td class="text-center px-4 py-2">
+                                <td class="text-gray-200 text-center px-4 py-2">{{ $rdo->obras->nome ?? 'Obra não encontrada' }}</td>
+                                <td class="text-gray-200 text-center px-4 py-2 hidden lg:table-cell">{{ $rdo->obras->empresa_contratada ?? 'Empresa não encontrada' }}</td>
+                                <td class="text-gray-200 text-center px-4 py-2">{{ $rdo->obras->objeto_contrato ?? 'Objeto não encontrado' }}</td>
+                                <td class="text-gray-200 text-center px-4 py-2 hidden lg:table-cell">{{ $rdo->status }}</td>
+                                <td class="text-center px-4 py-2 hidden lg:table-cell">
                                     <a href="{{ route('rdos.show', $rdo) }}"
                                         class="text-txtblue text-4xl hover:text-white transition-all duration-200">
                                         <i class="bi bi-arrow-up-right-circle"></i>

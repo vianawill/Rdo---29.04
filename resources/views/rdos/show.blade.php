@@ -7,7 +7,7 @@
 
     <div class="container mx-auto p-4 lg:pl-[300px] mt-10 lg:mt-5 lg:max-w-6xl">
         <div class="mt-4 grid grid-cols-1 gap-7 px-3 lg:px-0 w-full mx-auto">
-            <div class="bg-input shadow-blue-custom p-6 rounded-lg w-full h-full flex flex-col justify-between lg:max-w-3xl mx-auto">
+            <div class="bg-input shadow-blue-custom p-6 rounded-lg w-full h-[70px] flex flex-col justify-between lg:max-w-3xl mx-auto">
                 <div class="card shadow-lg rounded">
                     <ul class="overflow-y-auto pr-2 -mr-2 scrollbar-hide max-h-[72vh] sm:max-h-[74vh] space-y-2">
 
@@ -24,6 +24,10 @@
                         <div class="card-body">
 
                             <div class="flex flex-wrap justify-between -mx-2 px-3 p-4">
+                                <div class="w-full sm:w-1/3 px-2 mb-4">
+                                    <strong class="text-txtblue">Status:</strong>
+                                    <p class="{{ $rdo->status === 'Pendente' ? 'text-orange-400 font-bold' : ($rdo->status === 'Aprovado' ? 'text-accept font-bold' : 'text-gray-200') }}">{{ $rdo->status }}</p>
+                                </div>
                                 <div class="w-1/2 sm:w-1/3 px-2 mb-4">
                                     <strong class="text-txtblue">Obra:</strong>
                                     <p class="text-gray-200">{{ $rdo->obras->nome }}</p>
@@ -36,6 +40,7 @@
                                     <strong class="text-txtblue">Objeto do Contrato:</strong>
                                     <p class="text-gray-200">{{ $rdo->obras->objeto_contrato }}</p>
                                 </div>
+                                
                             </div>
 
                             <h6 class="text-center font-semibold text-txtblue bg-bdinput rounded-md">Condição do Tempo</h6>
@@ -184,7 +189,7 @@
     </div>
 </body>
 
-<div class="mt- fixed bottom-8 left-1/2 transform -translate-x-1/2 lg:left-[calc(298px+40%)] lg:-translate-x-1/2 flex justify-center space-x-2 sm:space-x-5">
+<div class="mt- fixed bottom-1 left-1/2 transform -translate-x-1/2 lg:left-[calc(298px+40%)] lg:-translate-x-1/2 flex justify-center space-x-2 sm:space-x-5">
 
     <a href="{{ route('rdos.index') }}"
         class="bg-txtblue/10 border border-txtblue text-txtblue px-3 py-1 rounded-md shadow-lg text-sm font-bold
@@ -236,7 +241,7 @@
     </div>
     @endif
 
-
+    @if ($rdo->status === "Pendente")
     <a href="{{ route('rdos.edit', $rdo) }}"
         class="bg-edit/10 border border-edit text-edit px-3 py-1 rounded-md shadow-lg text-sm font-bold
                flex items-center justify-center space-x-1 whitespace-nowrap
@@ -268,6 +273,7 @@
         <i class="bi bi-x-circle-fill text-lg sm:text-md"></i>
         <span class="font-bold hidden sm:inline">Rejeitar</span>
     </form>
+    @endif
     @endcan
 
 

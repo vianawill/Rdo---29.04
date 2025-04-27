@@ -41,29 +41,29 @@
                             <div class="flex flex-wrap justify-between -mx-2 sm:px-6 px-5 p-4">
                                 <div class="col-md-4">
                                     <strong class=" text-txtblue">Tempo Total do Contrato:</strong>
-                                    <p class="text-gray-200">{{ $obra->tempo_total_contrato }}</p>
+                                    <p class="text-gray-200">{{ $obra->tempo_total_contrato ?? 'N/A' }}</p>
                                 </div>
                             </div>
 
                             <div class="flex flex-wrap justify-between -mx-2 sm:px-6 px-5 p-4">
                                 <div class="col-md-4">
                                     <strong class=" text-txtblue">Data Prevista Início:</strong>
-                                    <p class="text-gray-200">{{ $obra->data_prevista_inicio_obra }}</p>
+                                    <p class="text-gray-200">{{ $obra->data_prevista_inicio_obra ? \Carbon\Carbon::parse($obra->data_prevista_inicio_obra)->format('d/m/Y') : 'N/A' }}</p>
                                 </div>
                                 <div class="col-md-4">
                                     <strong class=" text-txtblue">Data Real Início:</strong>
-                                    <p class="text-gray-200">{{ $obra->data_real_inicio_obra ?? 'N/A' }}</p>
+                                    <p class="text-gray-200">{{ $obra->data_real_inicio_obra ?? 'N/A' ? \Carbon\Carbon::parse($obra->data_real_inicio_obra)->format('d/m/Y') : 'N/A' }}</p>
                                 </div>
                             </div>
 
                             <div class="row flex flex-wrap justify-between sm:px-6 -mx-2 px-5 p-4">
                                 <div class="col-md-6">
                                     <strong class="text-txtblue">Data Prevista Término:</strong>
-                                    <p class="text-gray-200">{{ $obra->data_prevista_termino_obra }}</p>
+                                    <p class="text-gray-200">{{ $obra->data_prevista_termino_obra ? \Carbon\Carbon::parse($obra->data_prevista_termino_obra)->format('d/m/Y') : 'N/A' }}</p>
                                 </div>
                                 <div class="col-md-6">
                                     <strong class=" text-txtblue">Data Real Término:</strong>
-                                    <p class="text-gray-200">{{ $obra->data_real_termino_obra ?? 'N/A' }}</p>
+                                    <p class="text-gray-200">{{ $obra->data_real_termino_obra ? \Carbon\Carbon::parse($obra->data_real_termino_obra)->format('d/m/Y') : 'N/A' }}</p>
                                 </div>
                             </div>
 
@@ -86,7 +86,7 @@
     </div>
 </body>
 
-<div class="mt- fixed bottom-8 left-1/2 transform -translate-x-1/2 lg:left-[calc(298px+40%)] lg:-translate-x-1/2 flex justify-center space-x-2 sm:space-x-5">
+<div class="mt- fixed bottom-1 left-1/2 transform -translate-x-1/2 lg:left-[calc(298px+40%)] lg:-translate-x-1/2 flex justify-center space-x-2 sm:space-x-5">
 
     <a href="{{ route('obras.index') }}"
         class="bg-txtblue/10 border border-txtblue text-txtblue px-3 py-1 rounded-md shadow-lg text-sm font-bold

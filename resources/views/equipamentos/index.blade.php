@@ -108,8 +108,8 @@
                sm:px-4 sm:py-2 sm:rounded-lg sm:text-md
                overflow-hidden transition-all duration-200
                hover:bg-edit hover:text-white">
-                                        <i class="bi bi-pencil-square text-sm sm:text-md"></i>
-                                        <span class="font-bold">Editar</span>
+                                        <i class="bi bi-pencil-square text-lg "></i>
+                                        
                                     </a>
                                 </td>
 
@@ -122,8 +122,8 @@
                hover:bg-reject hover:text-white">
                                         @csrf
                                         @method('DELETE')
-                                        <i class="bi bi-x-circle-fill text-sm sm:text-md"></i>
-                                        <span class="font-bold">Excluir</span>
+                                        <i class="bi bi-x-circle-fill text-lg"></i>
+                                        
                                     </form>
                                 </td>
                              @endcan
