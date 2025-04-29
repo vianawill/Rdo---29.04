@@ -2,7 +2,8 @@
 
 use App\Http\Controllers\EquipamentoController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\MaoObraController;
+use App\Http\Controllers\MaoObraDiretaController;
+use App\Http\Controllers\MaoObraIndiretaController;
 use App\Http\Controllers\ObraController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RdoController;
@@ -23,9 +24,10 @@ Route::middleware(['auth'])->group(function() {
     Route::post('/rdos/{rdo}/aprovar', [RdoController::class, 'aprovar'])->name('rdos.aprovar');
     Route::get('/rdos/{rdo}/pdf', [RdoController::class, 'gerarPDF'])->name('rdos.pdf');
     Route::post('/rdo/{rdo}/assinarPdf', [RdoController::class, 'assinarPdf'])->name('rdos.assinarPdf');
-    
+    Route::resource('turnos', ObraController::class);
     Route::resource('obras', ObraController::class);
     Route::resource('equipamentos', EquipamentoController::class);
-    Route::resource('mao_obras', MaoObraController::class);
+    Route::resource('mao_obra_diretas', MaoObraDiretaController::class);
+    Route::resource('mao_obra_indiretas', MaoObraIndiretaController::class);
     
 });

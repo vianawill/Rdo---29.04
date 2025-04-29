@@ -5,7 +5,7 @@
 <!-- Adiciona isso para garantir que o scroll geral não atrapalhe no mobile -->
 
 <body class="overflow-hidden">
-    <div class="container mx-auto p-4 lg:pl-[300px] mt-6 lg:mt-20 lg:max-w-6xl">
+    <div class="container mx-auto p-4 lg:pl-[300px] mt-6 lg:mt-12 lg:max-w-6xl">
 
         <!-- Boas-vindas -->
         <div class="flex items-center justify-center space-x-3">

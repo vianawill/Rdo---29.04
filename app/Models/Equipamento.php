@@ -9,14 +9,11 @@ class Equipamento extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'nome',
-        'tipo',
-    ];
+    protected $fillable = ['nome'];
 
     // Relacionamento muitos para muitos com Rdo
     public function rdos()
     {
-        return $this->belongsToMany(Rdo::class, 'rdo_equipamentos');
+        return $this->belongsToMany(Rdo::class)->withPivot('quant');
     }
 }

@@ -3,6 +3,7 @@
 
 <!-- INICIO HEAD -->
 @auth
+
 <head>
 
     <meta charset="UTF-8">
@@ -10,7 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
-    
+
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;800&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
@@ -18,31 +19,29 @@
 </head>
 <!-- FIM HEAD -->
 <header>
-<nav class="fixed text-2xl top-5 px-1 right-4 z-50 flex items-center space-x-3 lg:hidden">
+    <nav class="fixed text-2xl top-5 px-1 right-4 z-50 flex items-center space-x-3 lg:hidden">
 
-    <!-- Notificações -->
-    <div class="relative">
-        <i class="bi bi-bell-fill text-gray-200"></i>
-        <i class="bi bi-exclamation-circle-fill absolute text-base text-red-600 -top-1 -right-1"></i>
-    </div>
-
-    <!-- Perfil -->
-    <div class="relative group">
-        <i class="bi bi-person-circle px-1 text-gray-200 "></i>
-        <div class="absolute left-1/2 transform -translate-x-1/2 mt-1 bg-gray-800 text-white text-sm px-3 py-1 rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity">
-            {{ Auth::user()->name }}
+        <!-- Notificações -->
+        <div class="relative">
+            <i class="bi bi-bell-fill text-gray-200"></i>
+            <i class="bi bi-exclamation-circle-fill absolute text-base text-red-600 -top-1 -right-1"></i>
         </div>
-    </div>
 
-</nav>
+        <!-- Perfil -->
+        <div class="relative group">
+            <i class="bi bi-person-circle px-1 text-gray-200 "></i>
+            <div class="absolute left-1/2 transform -translate-x-1/2 mt-1 bg-gray-800 text-white text-sm px-3 py-1 rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity">
+                {{ Auth::user()->name }}
+            </div>
+        </div>
+
+    </nav>
 </header>
 <!-- INICIO BODY -->
 
 <body class="bg-fundo  font-[Poppins]">
     @csrf
-<main>
-@yield('content')
-</main>
+    <main>@yield('content')</main>
     <!-- BOTAO OPEN SIDEBAR -->
     <span class="fixed text-white text-3xl top-5 left-4 cursor-pointer rounded-2xl" onclick="Openbar()">
         <i class="bi bi-filter-left px-1 bg-gray-900 rounded-2xl"></i>
@@ -50,7 +49,8 @@
 
     <!-- SIDEBAR -->
     <div id="sidebar" class="sidebar fixed top-0 bottom-0 lg:left-0 left-[-300px] duration-600 ease-in-out
-    p-4 w-[300px] overflow-y-auto text-center bg-fundo shadow-xl h-screen border-r-2 border-bdinput transform">
+    p-4 w-[300px] overflow-y-auto text-center bg-fundo shadow-xl h-screen border-r-2 border-bdinput transform
+    scrollbar-hide">
 
         <!-- DIV SIDEBAR -->
         <div class=" text-gray-100 text-xl">
@@ -78,12 +78,13 @@
 
                 <!-- INPUT PESQUISAR -->
                 <div class="p-2.5 mt-3 flex items-center rounded-md 
-                px-4 duration-300 cursor-pointer  bg-bdinput">
+                            px-4 duration-300 cursor-pointer bg-bdinput">
 
                     <!-- ICONE -->
                     <i class="bi bi-search text-sm"></i>
 
-                    <input id="searchInput" class="text-[15px] ml-4 w-full bg-transparent focus:outline-none" placeholder="Pesquisar" />
+                    <input id="searchInput" class="text-[15px] ml-4 w-full bg-transparent focus:outline-none"
+                        placeholder="Pesquisar" />
 
                 </div>
 
@@ -95,9 +96,7 @@
 
                     <div class="flex justify-between w-full items-center" onclick="dropDown()">
 
-                        <span class="text-[15px] ml-4 text-gray-200">
-                            RDO's
-                        </span>
+                        <span class="text-[15px] ml-4 text-gray-200">RDO's</span>
 
                         <!-- BOTAO SUBMENU -->
                         <span class="text-sm transition-transform duration-300 rotate-180" id="arrow">
@@ -111,153 +110,162 @@
                 <!-- SUBMENU -->
                 <div class="leading-7 text-sm mt-2 w-4/5 mx-auto" id="submenu">
 
-                   
-
                     <!-- SUBMENU MINHAS RDO's -->
                     <a href="{{ route('rdos.index') }}" class="sidebar-item">
-
                         <div class="flex items-center p-2.5 mt-2 rounded-md px-4 duration-300 cursor-pointer hover:bg-txtblue">
-
                             <!-- ÍCONE -->
                             <i class="bi bi-file-earmark-check text-lg mr-2"></i>
-
-                            <span>
-                                Meus RDO's
-                            </span>
-
+                            <span>Meus RDO's</span>
                         </div>
-
                     </a>
 
                     <!-- SUBMENU GERAR RDO -->
                     <a href="{{ route('rdos.create') }}" class="sidebar-item">
 
                         <div class="flex items-center p-2.5 mt-2 rounded-md px-4 duration-300 cursor-pointer hover:bg-txtblue">
-
                             <!-- ÍCONE -->
                             <i class="bi bi-file-earmark-plus text-lg mr-2"></i>
-
-                            <span>
-                                Gerar RDO
-                            </span>
-
+                            <span>Gerar RDO</span>
                         </div>
-
                     </a>
-
                 </div>
 
                 <!-- OBRAS -->
                 <a href="{{ route('obras.index') }}" class="sidebar-item">
-
-                    <div class="p-2.5 mt-2 flex items-center rounded-md px-4 duration-300 cursor-pointer  hover:bg-txtblue">
-
+                    <div class="p-2.5 mt-2 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-txtblue">
                         <!-- ICONE -->
                         <i class="bi bi-cone-striped"></i>
-
                         <span class="text-[15px] ml-4 text-gray-200">
                             Obras
                         </span>
-
                     </div>
-
                 </a>
 
                 <!-- EQUIPAMENTOS -->
                 <a href="{{ route('equipamentos.index') }}" class="sidebar-item">
-
-                    <div class="p-2.5 mt-2 flex items-center rounded-md px-4 duration-300 cursor-pointer  hover:bg-txtblue">
-
+                    <div class="p-2.5 mt-2 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-txtblue">
                         <!-- ICONE -->
                         <i class="bi bi-tools"></i>
-
                         <span class="text-[15px] ml-4 text-gray-200">
                             Equipamentos
                         </span>
-
                     </div>
-
                 </a>
 
-                <!-- MAO DE OBRA -->
-                <a href="{{ route('mao_obras.index') }}" class="sidebar-item">
-
-                    <div class="p-2.5 mt-2 flex items-center rounded-md px-4 duration-300 cursor-pointer  hover:bg-txtblue">
-
-                        <!-- ICONE -->
-                        <i class="bi bi-wrench"></i>
-
-                        <span class="text-[15px] ml-4 text-gray-200">
-                            Mão de Obra
+                <!-- Mão de Obra -->
+                <div class=" sidebar-item p-2.5 mt-2 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-txtblue">
+                    <!-- ICONE -->
+                    <i class="bi bi-wrench"></i>
+                    <div class="flex justify-between w-full items-center" onclick="dropDown()">
+                        <span class="text-[15px] ml-4 text-gray-200">Mão de Obra</span>
+                        <!-- BOTAO SUBMENU -->
+                        <span class="text-sm transition-transform duration-300 rotate-180" id="arrow">
+                            <i class="bi bi-chevron-down"></i>
                         </span>
-
                     </div>
+                </div>
 
-                </a>
+                <!-- SUBMENU -->
+                <div class="leading-7 text-sm mt-2 w-4/5 mx-auto" id="submenu">
+                    <!-- SUBMENU Mão de Obra Direta -->
+                    <a href="{{ route('mao_obra_diretas.index') }}" class="sidebar-item">
+                        <div class="flex items-center p-2.5 mt-2 rounded-md px-4 duration-300 cursor-pointer hover:bg-txtblue">
+                            <!-- ÍCONE -->
+                            <i class="bi bi-wrench text-lg mr-2"></i>
+                            <span> Mão de Obra Direta</span>
+                        </div>
+                    </a>
 
-                <!-- DIVISORIA -->
+                    <!-- SUBMENU Mão de Obra Indireta -->
+                    <a href="{{ route('mao_obra_indiretas.index') }}" class="sidebar-item">
+                        <div class="flex items-center p-2.5 mt-2 rounded-md px-4 duration-300 cursor-pointer hover:bg-txtblue">
+                            <!-- ÍCONE -->
+                            <i class="bi bi-wrench text-lg mr-2"></i>
+                            <span> Mão de Obra Indireta</span>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- MAO DE OBRA
+                        <div class=" sidebar-item p-2.5 mt-2 flex items-center rounded-md px-4 duration-300 cursor-pointer  hover:bg-txtblue">
+                            !-- ICONE
+                            <i class="bi bi-wrench"></i>
+                            <div class="flex justify-between w-full items-center" onclick="dropDown()">
+                                <span class="text-[15px] ml-4 text-gray-200">Mão de Obra</span>
+                                !-- BOTAO SUBMENU 
+                                <span class="text-sm transition-transform duration-300 rotate-180" id="arrow">
+                                    <i class="bi bi-chevron-down"></i>
+                                </span>
+                            </div>
+                        </div>
+                        
+
+                            <a href="{{ route('mao_obra_diretas.index') }}" class="sidebar-item">
+                                <div class="p-2.5 mt-2 flex items-center rounded-md px-4 duration-300 cursor-pointer  hover:bg-txtblue">
+                                    !-- ICONE 
+                                    <i class="bi bi-wrench"></i>
+                                    <span class="text-[15px] ml-4 text-gray-200">
+                                        Mão de Obra Direta
+                                    </span>
+                                </div>
+                            </a>
+                            
+                            <a href="{{ route('mao_obra_diretas.index') }}" class="sidebar-item">
+                                <div class="p-2.5 mt-2 flex items-center rounded-md px-4 duration-300 cursor-pointer  hover:bg-txtblue">
+                                    !-- ICONE  --
+                                    <i class="bi bi-wrench"></i>
+                                    <span class="text-[15px] ml-4 text-gray-200">
+                                        Mão de Obra Inireta
+                                    </span>
+                                </div>
+                            </a> -->
+
+                <!-- DIVISORIA  -->
                 <hr class="my-4 text-gray-600">
 
                 <!-- NOTIFICAÇÕES -->
                 <a href="" class="sidebar-item">
-
                     <div class="p-2.5 mt-2 flex items-center rounded-md px-4 duration-300 cursor-pointer  hover:bg-txtblue">
-
                         <!-- ICONE -->
                         <div class="relative">
                             <i class="bi bi-bell-fill"></i>
                             <i class="bi bi-exclamation-circle-fill absolute text-sm text-red-600 -top-1 -right-1"></i>
                         </div>
-
                         <span class="text-[15px] ml-4 text-gray-200">
                             Notificações
                         </span>
-
                     </div>
-
                 </a>
 
                 <!-- USUÁRIOS -->
                 <a href="{{ route('users.index') }}" class="sidebar-item">
-
                     <div class="p-2.5 mt-2 flex items-center rounded-md px-4 duration-300 cursor-pointer  hover:bg-txtblue">
-
                         <!-- ICONE -->
                         <i class="bi bi-people-fill"></i>
-
                         <span class="text-[15px] ml-4 text-gray-200">
                             Usuários
                         </span>
-
                     </div>
-
                 </a>
 
                 <!-- NOME DO USUARIO -->
                 <div class="absolute bottom-20 left-0 w-full p-4">
-
                     <label class="perfil-label text-sm text-gray-200">
-
                         <span class="font-bold text-txtblue">
                             {{ Auth::user()->name }}
                         </span>
-
                     </label>
 
                     <!-- LOGOUT -->
                     <a href="{{ route('logout') }}">
                         <div class="w-40 mx-auto p-1 mt-2 flex items-center justify-center rounded-2xl px-4 duration-300 cursor-pointer hover:bg-red-500"
                             onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-
                             <!-- ICONE -->
                             <i class="bi bi-box-arrow-in-right"></i>
-
                             <span class="text-[12px] ml-4 text-gray-200">
                                 Logout
                             </span>
-
                         </div>
-
                     </a>
 
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
@@ -265,27 +273,46 @@
                     </form>
 
                 </div>
-                <!-- FIM CONTAINER SIDEBAR -->
 
             </div>
-            <!-- FIM DIV SIDEBAR -->
+            <!-- FIM CONTAINER SIDEBAR -->
 
         </div>
-        <!-- FIM SIDEBAR -->
-       
-        
+        <!-- FIM DIV SIDEBAR -->
+
+    </div>
+    <!-- FIM SIDEBAR -->
+
 </body>
-@endauth
 <!-- FIM BODY -->
+@endauth
+
 
 <!-- SCRIPT -->
 <script>
     // FUNÇÃO PARA ABRIR SUB MENU DO SIDEBAR
-    function dropDown() {
-        document.querySelector('#submenu').classList.toggle('hidden')
-        document.querySelector('#arrow').classList.toggle('rotate-180')
+    function dropDown(event) {
+        const parent = event.currentTarget.closest('.sidebar-item');
+        const submenu = parent.nextElementSibling;
+        const arrow = parent.querySelector('#arrow');
+
+        if (submenu && submenu.id === 'submenu') {
+            submenu.classList.toggle('hidden');
+            arrow.classList.toggle('rotate-180');
+        }
     }
-    dropDown()
+
+    document.querySelectorAll('.sidebar-item > div').forEach(item => {
+        const submenu = item.closest('.sidebar-item').nextElementSibling;
+        const arrow = item.querySelector('#arrow');
+
+        if (submenu && submenu.id === 'submenu') {
+            submenu.classList.add('hidden'); // Ensure submenus are initially hidden
+            arrow.classList.remove('rotate-180'); // Ensure arrows are in the default position
+        }
+
+        item.addEventListener('click', dropDown);
+    });
 
     // FUNÇÃO PARA ABRIR E FECHAR O SIDEBAR
     function Openbar() {
