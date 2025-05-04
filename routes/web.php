@@ -11,7 +11,7 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
-    return view('welcome'); // Exibe o formulário
+    return view('home'); // Exibe o formulário
 });
 
 Auth::routes(); //protege todas as rotas
