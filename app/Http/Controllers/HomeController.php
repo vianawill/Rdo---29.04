@@ -29,7 +29,7 @@ class HomeController extends Controller
     $rdosPendentes = Rdo::where('status', 'pendente')->latest()->take(3)->get();
 
     // Busque os últimos RDOs aprovados
-    $rdosAprovados = Rdo::where('status', 'aprovado')->latest()->take(4)->get();
+    $rdosAprovados = Rdo::where('status', 'aprovado')->latest()->take(3)->get();
 
     // Retorne a view com as variáveis $rdosPendentes e $rdosAprovados
     return view('home', compact('rdosPendentes', 'rdosAprovados'));

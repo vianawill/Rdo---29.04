@@ -15,7 +15,7 @@
         <div class="grid grid-cols-1 gap-7 mt-7 px-3 lg:px-0 w-full mx-auto">
 
             <!-- Notificações -->
-            <div class="bg-input shadow-blue-custom p-4 rounded-lg w-full h-[250px] lg:max-w-3xl mx-auto">
+            <div class="bg-input shadow-blue-custom p-4 rounded-lg w-full h-[240px] lg:max-w-3xl mx-auto">
                 <h2 class="text-gray-100 text-lg font-bold mb-2">
                     <i class="text-lg bi bi-file-earmark-text-fill"></i> RDOs Pendentes
                 </h2>
@@ -51,7 +51,7 @@
             </div>
 
             <!-- Últimos RDOs -->
-            <div class="bg-input shadow-blue-custom p-4 rounded-lg w-full h-[250px] lg:max-w-3xl mx-auto">
+            <div class="bg-input shadow-blue-custom p-4 rounded-lg w-full h-[265px] lg:max-w-3xl mx-auto">
                 <h2 class="text-gray-100 text-lg font-bold mb-2">
                     <i class="text-lg bi bi-file-earmark-text-fill"></i> Últimos RDOs
                 </h2>
