@@ -31,7 +31,7 @@ class RdoController extends Controller
         // $rdos = Rdo::with('obras')->get(); // Recupera todos os RDos com obras associadas
         // $rdos = Rdo::with('equipamentos')->get(); // Recupera todos os RDos com equipamentos associados
         // $rdos = Rdo::with('maoObras')->get(); // Recupera todos os RDos com mão de obras associadas
-        $rdos = Rdo::with('obras', 'equipamentos', 'maoObraDiretas', 'maoObraIndiretas')->get(); // Recupera todos de uma vez
+        $rdos = Rdo::with('obras', 'turnos', 'climas', 'equipamentos', 'maoObraDiretas', 'maoObraIndiretas')->get(); // Recupera todos de uma vez
         return view('rdos.index', compact('rdos'));
     }
 
@@ -115,7 +115,7 @@ class RdoController extends Controller
     public function show(Rdo $rdo)
     {
         $rdos = Rdo::with('obras', 'equipamentos', 'maoObraDiretas', 'maoObraIndiretas')->get(); // Recupera todos de uma vez
-        return view('rdos.create', compact('rdos'));
+        return view('rdos.show', compact('rdo'));
     }
 
     /**

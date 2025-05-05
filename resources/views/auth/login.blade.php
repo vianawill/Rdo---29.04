@@ -70,7 +70,7 @@
     <div class="titulo pt-2 pb-8">
 
         <h1 class="pt-2 text-[45px] lg:text-4xl font-bold text-white leading-tight whitespace-nowrap text-center">
-            Registro Diario de Obra
+            Registro Diário de Obra
         </h1>
     </div>
 
@@ -83,7 +83,7 @@
         <!--TEXTO CONTAINER-->
         <section>
             <h3 class="font-bold text-[50px] lg:text-2xl text-gray-100">Bem Vindo!</h3>
-            <p class="text-[35px] lg:text-xl text-grey-600 pt-2 text-gray-100"">Entre com seu cadastro...</p>
+            <p class="text-[35px] lg:text-xl text-grey-600 pt-2 text-gray-100">Entre com seu cadastro</p>
         </section>
 
         <!--SECTION FORM-->

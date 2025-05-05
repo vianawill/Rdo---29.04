@@ -15,7 +15,7 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;800&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 
 </head>
 <!-- FIM HEAD -->
@@ -156,7 +156,7 @@
                 <!-- Mão de Obra -->
                 <div class=" sidebar-item p-2.5 mt-2 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-txtblue">
                     <!-- ICONE -->
-                    <i class="bi bi-wrench"></i>
+                    <i class="bi bi-people-fill"></i>
                     <div class="flex justify-between w-full items-center" onclick="dropDown()">
                         <span class="text-[15px] ml-4 text-gray-200">Mão de Obra</span>
                         <!-- BOTAO SUBMENU -->
@@ -172,7 +172,7 @@
                     <a href="{{ route('mao_obra_diretas.index') }}" class="sidebar-item">
                         <div class="flex items-center p-2.5 mt-2 rounded-md px-4 duration-300 cursor-pointer hover:bg-txtblue">
                             <!-- ÍCONE -->
-                            <i class="bi bi-wrench text-lg mr-2"></i>
+                            <i class="bi bi-person-gear text-lg mr-2"></i>
                             <span> Mão de Obra Direta</span>
                         </div>
                     </a>
@@ -181,45 +181,23 @@
                     <a href="{{ route('mao_obra_indiretas.index') }}" class="sidebar-item">
                         <div class="flex items-center p-2.5 mt-2 rounded-md px-4 duration-300 cursor-pointer hover:bg-txtblue">
                             <!-- ÍCONE -->
-                            <i class="bi bi-wrench text-lg mr-2"></i>
+                            <i class="bi bi-person-gear text-lg mr-2"></i>
                             <span> Mão de Obra Indireta</span>
                         </div>
                     </a>
                 </div>
 
-                <!-- MAO DE OBRA
-                        <div class=" sidebar-item p-2.5 mt-2 flex items-center rounded-md px-4 duration-300 cursor-pointer  hover:bg-txtblue">
-                            !-- ICONE
-                            <i class="bi bi-wrench"></i>
-                            <div class="flex justify-between w-full items-center" onclick="dropDown()">
-                                <span class="text-[15px] ml-4 text-gray-200">Mão de Obra</span>
-                                !-- BOTAO SUBMENU 
-                                <span class="text-sm transition-transform duration-300 rotate-180" id="arrow">
-                                    <i class="bi bi-chevron-down"></i>
-                                </span>
-                            </div>
-                        </div>
-                        
-
-                            <a href="{{ route('mao_obra_diretas.index') }}" class="sidebar-item">
-                                <div class="p-2.5 mt-2 flex items-center rounded-md px-4 duration-300 cursor-pointer  hover:bg-txtblue">
-                                    !-- ICONE 
-                                    <i class="bi bi-wrench"></i>
-                                    <span class="text-[15px] ml-4 text-gray-200">
-                                        Mão de Obra Direta
-                                    </span>
-                                </div>
-                            </a>
-                            
-                            <a href="{{ route('mao_obra_diretas.index') }}" class="sidebar-item">
-                                <div class="p-2.5 mt-2 flex items-center rounded-md px-4 duration-300 cursor-pointer  hover:bg-txtblue">
-                                    !-- ICONE  --
-                                    <i class="bi bi-wrench"></i>
-                                    <span class="text-[15px] ml-4 text-gray-200">
-                                        Mão de Obra Inireta
-                                    </span>
-                                </div>
-                            </a> -->
+                <!-- TURNOS -->
+                <a href="{{ route('turnos.index') }}" class="sidebar-item">
+                    <div class="p-2.5 mt-2 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-txtblue">
+                        <!-- ICONE -->
+                        <i class="bi bi-sun-fill"></i>
+                        <i class="bi bi-moon-fill"></i>
+                        <span class="text-[15px] ml-4 text-gray-200">
+                            Turnos
+                        </span>
+                    </div>
+                </a>
 
                 <!-- DIVISORIA  -->
                 <hr class="my-4 text-gray-600">

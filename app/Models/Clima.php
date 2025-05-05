@@ -14,16 +14,9 @@ class Clima extends Model
     /**
      * Um clima pode estar presente em vários RDOs (por meio da tabela rdo_climas)
      */
-    public function rdoClimas()
+    public function rdoTurnos()
     {
-        return $this->hasMany(RdoClimas::class);
+        return $this->hasMany(RdoTurno::class);
     }
 
-    /**
-     * Acesso direto aos RDOs através do relacionamento intermediário
-     */
-    public function rdos()
-    {
-        return $this->belongsToMany(Rdo::class, 'rdo_climas');
-    }
 }
