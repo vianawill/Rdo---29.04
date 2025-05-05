@@ -21,6 +21,11 @@ class Rdo extends Model
         'acidente',
     ];
 
+    public function turnos()
+    {
+        return $this->hasMany(RdoTurno::class);
+    }
+
     // Relacionamento um para muitos com Obra
     public function obras()
     {
@@ -30,7 +35,8 @@ class Rdo extends Model
     // Relacionamento muitos para muitos com Equipamento
     public function equipamentos()
     {
-        return $this->belongsToMany(Equipamento::class, 'rdo_equipamentos'); // 'rdo_equipamentos' é a tabela de relacionamento entre rdos e equipamentos, se retirar o Laravel busca por equipamento_rdo (que não existe)
+        return $this->belongsToMany(Equipamento::class, 'rdo_equipamentos', 'rdo_id', 'equipamento_id')
+                    ->withPivot(['...']); // 'rdo_equipamentos' é a tabela de relacionamento entre rdos e equipamentos, se retirar o Laravel busca por equipamento_rdo (que não existe)
     }
 
     // Relacionamento muitos para muitos com MaoObraDireta
@@ -51,9 +57,6 @@ class Rdo extends Model
         return $this->belongsTo(User::class, 'aprovado_por'); 
     }
 
-    public function turnos()
-    {
-        return $this->hasMany(RdoTurno::class);
-    }
+    
 
 }

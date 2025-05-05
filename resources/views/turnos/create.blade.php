@@ -1,17 +1,38 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <h1>Novo Turno</h1>
 
-    <form action="{{ route('turnos.store') }}" method="POST">
-        @csrf
-        <div class="mb-3">
-            <label for="turno" class="form-label">Nome do Turno</label>
-            <input type="text" name="turno" id="turno" class="form-control" required>
+    <!-- INICIO MAIN -->
+    <!-- CONTAINER -->
+    <main class="container-base">
+        <div class="grid-base">
+            <div class="card-base">
+
+                <!-- TEXTO CONTAINER -->
+                <section>
+                    <p class="title-section">Cadastrar Turno</p>
+                </section>
+
+                <!-- FORMULÁRIO -->
+                <section class="section-form">
+                    <form class="form-base" method="POST" action="{{ route('turnos.store') }}">
+                        @csrf
+
+                        <div class="group-base">
+                            <label class="label-base">Nome do Turno</label>
+                            <input type="text" name="nome" id="nome" class="input-base" required>
+                        </div>
+
+                        <button type="submit" class="button-base">
+                            Cadastrar
+                        </button>
+                    </form>
+                </section>
+            </div>
         </div>
-        <button type="submit" class="btn btn-primary">Salvar</button>
-        <a href="{{ route('turnos.index') }}" class="btn btn-secondary">Voltar</a>
-    </form>
-</div>
+    </main>
+
+    <!--FIM CONTAINER-->
+    <!-- FIM MAIN -->
+
 @endsection

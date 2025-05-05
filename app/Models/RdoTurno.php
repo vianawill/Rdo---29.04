@@ -10,30 +10,24 @@ class RdoTurno extends Model
     use HasFactory;
 
     protected $fillable = [
-        // 'numero_rdo',
-        // 'data',
-        // 'dia_da_semana',
-        // 'obra_id',
-        // 'manha',
-        // 'tarde',
-        // 'noite',
-        // 'condicao_area',
-        // 'acidente',
+        'rdo_id',
+        'turno_id',
+        'clima_id'
     ];
 
-    public function equipamentos()
+    public function rdo()
     {
-        return $this->hasMany(RdoTurnoEquipamento::class);
+        return $this->belongsTo(Rdo::class);
     }
 
-    public function maoObraDiretas()
+    public function turno()
     {
-        return $this->hasMany(RdoTurnoMaoObraDireta::class);
+        return $this->belongsTo(Turno::class);
     }
 
-    public function maoObraIndiretas()
+    public function clima()
     {
-        return $this->hasMany(RdoTurnoMaoObraIndireta::class);
+        return $this->belongsTo(Clima::class);
     }
 
 }
