@@ -57,7 +57,7 @@ Durante o desenvolvimento deste projeto, adquiri experiência com:
 
 ## 👨‍💻 Autores
 
-**Gabriel Jacobis - BackEnd** 
+**Gabriel Jacobis - BackEnd**
 Estudante de Desenvolvimento de Sistemas – SENAC MG  
 Fascinado pela tecnologia, buscando me tornar um desenvolvedor full stack.
 
